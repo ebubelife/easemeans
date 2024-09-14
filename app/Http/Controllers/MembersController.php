@@ -208,7 +208,7 @@ class MembersController extends Controller
 
 
              }else{
-                return response()->json(['success' => false, 'status' => 'WRONG_OTP', 'message'=>'WRONG_OTP',  'user_data'=>$member], 400);
+                return response()->json(['success' => false, 'status' => 'WRONG_OTP', 'message'=>'WRONG_OTP',  'user_data'=>$member], 401);
                
              }
         }
