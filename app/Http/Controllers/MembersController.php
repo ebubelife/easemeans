@@ -203,7 +203,7 @@ class MembersController extends Controller
              if($member->email_verification_code == $validated["otp"] ){
 
 
-                return response()->json(['success' => true, 'status' => 'SUCCESS', 'message'=>'OTP_VERIFIED',  'user_data'=>$member], 400);
+                return response()->json(['success' => true, 'status' => 'SUCCESS', 'message'=>'OTP_VERIFIED',  'user_data'=>$member], 200);
                
 
 
