@@ -185,5 +185,32 @@ class MembersController extends Controller
         }
     
 
+        public function verify_email_otp(Request $request){
+
+            $validated = $request->validate([
+               
+                
+                'email' => 'required|string|email',
+                'otp' => 'required|string',
+               
+    
+            ]);
+
+             //check if email exists
+             $member = Members::where("email",$validated["email"])->first() ;
+
+             if($member->email_verification_code == $validated["otp"] ){
+
+
+                return response()->json(['success' => true, 'status' => 'SUCCESS', 'message'=>'OTP_VERIFIED',  'user_data'=>$member], 400);
+               
+
+
+             }else{
+                return response()->json(['success' => false, 'status' => 'WRONG_OTP', 'message'=>'WRONG_OTP',  'user_data'=>$member], 400);
+               
+             }
+        }
+
    
 }

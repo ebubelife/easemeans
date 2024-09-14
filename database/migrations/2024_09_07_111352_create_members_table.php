@@ -41,6 +41,7 @@ return new class extends Migration
             $table->boolean("phone_verified")->default(false);
 
 
+            
             $table->text("address")->nullable();
 
             $table->text("safehaven_number")->nullable();

@@ -3,6 +3,8 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MembersController;
+use App\Http\Controllers\SafeHaven;
+use App\Http\Controllers\BVNVerify;
 
 /*
 |--------------------------------------------------------------------------
@@ -34,6 +36,24 @@ Route::controller(MembersController::class)->group(function(){
 
      //verify email 
      Route::post('/v1/verify_email', 'verify_email');
+
+
+});
+
+Route::controller(SafeHaven::class)->group(function(){
+
+     //generate token
+     Route::get('/v1/generate_token', 'exchange_safehaven_client_assertion');
+
+
+
+});
+
+Route::controller(BVNVerify::class)->group(function(){
+
+    //generate token
+    Route::post('/v1/send_bvn_otp', 'send_bvn_otp');
+
 
 
 });
