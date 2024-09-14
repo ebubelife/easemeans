@@ -118,13 +118,13 @@ class MembersController extends Controller
             $validated = $request->validate([
                
                 
-                'email' => 'required|string|email',
+                'id' => 'required|string',
                 'code' => 'required|string|min:6'
     
             ]);
     
-            //check if email exists
-            $member = Members::where("email",$validated["email"])->first() ;
+            //check if id exists
+            $member = Members::find($validated["id"]) ;
     
             if($member){
     
