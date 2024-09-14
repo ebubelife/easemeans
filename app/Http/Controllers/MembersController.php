@@ -9,6 +9,7 @@ use App\Mail\NewUserEmailCode;
 use Illuminate\Support\Facades\Mail;
 use Exception;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Hash;
 
 class MembersController extends Controller
 {
@@ -52,7 +53,7 @@ class MembersController extends Controller
        $member->first_name = $validated["first_name"];
        $member->last_name = $validated["last_name"];
        $member->email = $validated["email"];
-       $member->password = $validated["password"];
+       $member->password = Hash::make($validated["password"]);
        
 
        if($member->save()){
@@ -71,7 +72,7 @@ class MembersController extends Controller
 
        }else{
 
-        return response()->json(['success' => false, 'status' => 'SERVER ERROR'], 400);
+        return response()->json(['success' => false, 'status' => 'SERVER ERROR'], 500);
             
        }
 
