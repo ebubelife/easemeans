@@ -151,13 +151,13 @@ class MembersController extends Controller
             $validated = $request->validate([
                
                 
-                'email' => 'required|string|email',
+                'id' => 'required|string',
                
     
             ]);
 
              //check if email exists
-             $member = Members::where("email",$validated["email"])->first() ;
+             $member = Members::find($validated["id"]);
 
              $name = $member->first_name;
              $otp = random_int(100000, 999999); // Generate a random OTP
@@ -186,32 +186,6 @@ class MembersController extends Controller
         }
     
 
-        public function verify_email_otp(Request $request){
-
-            $validated = $request->validate([
-               
-                
-                'email' => 'required|string|email',
-                'otp' => 'required|string',
-               
-    
-            ]);
-
-             //check if email exists
-             $member = Members::where("email",$validated["email"])->first() ;
-
-             if($member->email_verification_code == $validated["otp"] ){
-
-
-                return response()->json(['success' => true, 'status' => 'SUCCESS', 'message'=>'OTP_VERIFIED',  'user_data'=>$member], 200);
-               
-
-
-             }else{
-                return response()->json(['success' => false, 'status' => 'WRONG_OTP', 'message'=>'WRONG_OTP',  'user_data'=>$member], 401);
-               
-             }
-        }
-
+       
    
 }

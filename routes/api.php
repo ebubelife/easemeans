@@ -34,6 +34,9 @@ Route::controller(MembersController::class)->group(function(){
      //verify email - send code to email
      Route::post('/v1/send_email_otp/{email}', 'send_email_verify_code');
 
+      //resend code to email
+      Route::post('/v1/resend_otp_email', 'resend_otp_email');
+
      //verify email 
      Route::post('/v1/verify_email', 'verify_email');
 
