@@ -37,7 +37,7 @@ class MembersController extends Controller
 
             return response()->json([
                 'success' =>false,
-                'status' => 'EMAIL_EXISTS',
+                'status' => 'USER_EXISTS',
                 'message' => "That email already exists, please use another or login",
                  'user_data' => $member
             ],401);

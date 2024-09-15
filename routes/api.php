@@ -54,8 +54,11 @@ Route::controller(SafeHaven::class)->group(function(){
 
 Route::controller(BVNVerify::class)->group(function(){
 
-    //generate token
+    //send BVN otp
     Route::post('/v1/send_bvn_otp', 'send_bvn_otp');
+
+    //verify BVN otp
+    Route::post('/v1/verify_bvn_otp', 'verify_bvn_otp');
 
 
 
