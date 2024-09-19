@@ -109,7 +109,7 @@ class BVNVerify extends Controller
         $validated = $request->validate([
                
                 
-            'id' => 'required|string',
+            'user_id' => 'required|string',
             'code' => 'required|string',
             'request_id' => 'required|string',
            
