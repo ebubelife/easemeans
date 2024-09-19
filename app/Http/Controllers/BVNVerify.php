@@ -117,7 +117,7 @@ class BVNVerify extends Controller
         ]);
 
          //check if email exists
-         $member = Members::find($validated["id"]);
+         $member = Members::find($validated["user_id"]);
 
        
 
