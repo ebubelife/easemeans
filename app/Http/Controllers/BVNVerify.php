@@ -156,8 +156,8 @@ class BVNVerify extends Controller
          
          $body = json_encode([
              'type' => $type,
-             'identityId' => $validated["request_id"],
-             'otp' => $validated["code"]
+             'identityId' => '66e919ba09aeda13957ce839',//$validated["request_id"],
+             'otp' => '019750',//$validated["code"]
          ]);
   
          // POST request using the created object
