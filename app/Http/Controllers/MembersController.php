@@ -190,7 +190,7 @@ class MembersController extends Controller
             $validated = $request->validate([
                
                 
-                'id' => 'required|string',
+                'user_id' => 'required|string',
                 'pin' => 'required|string'
     
             ]);
