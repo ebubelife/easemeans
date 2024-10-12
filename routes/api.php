@@ -40,6 +40,10 @@ Route::controller(MembersController::class)->group(function(){
      //verify email 
      Route::post('/v1/verify_email', 'verify_email');
 
+     //get users
+     Route::post('/v1/users/all', 'get_users');
+
+
 
 });
 

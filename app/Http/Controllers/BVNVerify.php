@@ -194,11 +194,16 @@ class BVNVerify extends Controller
          }
  
         //Else it means it worked and bvn is verified
+
+        //save bvn verification state
+        $member->bvn_verified = true;
+        $member->save();
         return response()->json([
             'success' =>true,
             'status' => 'SUCCESS',
             'message' => "BVN successfully verified",
-            'bvn_data' =>  $decodedBody
+            'bvn_data' =>  $decodedBody,
+            'user_data' => $member
             
         ],200);
          

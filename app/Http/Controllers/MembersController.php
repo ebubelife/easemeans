@@ -186,6 +186,13 @@ class MembersController extends Controller
         }
     
 
+        public function get_members(){
+
+            $all = Members::all();
+            return response()->json(['success' => true, 'status' => 'SUCCESS', 'user_data'=>$all], 400);
+               
+        }
+
        
    
 }
