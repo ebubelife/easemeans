@@ -68,7 +68,7 @@ class BVNVerify extends Controller
         ];
 
         $type = "BVN";
-        $async = true;
+        $async = false;
         $debitAccountNumber = "0114762128";
         $number = $validated["bvn"]; //"22351451986"
         
@@ -151,13 +151,13 @@ class BVNVerify extends Controller
  
          ];
  
-         $type = "BVN";
+         $type = "BVN"; 
        
          
          $body = json_encode([
              'type' => $type,
-             'identityId' => '66e919ba09aeda13957ce839',//$validated["request_id"],
-             'otp' => '019750',//$validated["code"]
+             'identityId' => $validated["request_id"],
+             'otp' => $validated["code"]
          ]);
   
          // POST request using the created object
@@ -175,7 +175,15 @@ class BVNVerify extends Controller
          $decodedBody = json_decode($responseBody, true);
  
         
-         return $decodedBody;
+        return response()->json([
+            'success' =>true,
+            'status' => 'SUCCESS',
+            'message' => "BVN successfully verified",
+            'bvn_data' =>  $decodedBody
+            
+        ],400);
+         
+        
 
 
     }
