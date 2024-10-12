@@ -41,7 +41,7 @@ Route::controller(MembersController::class)->group(function(){
      Route::post('/v1/verify_email', 'verify_email');
 
      //get users
-     Route::get('/v1/users/all', 'get_users');
+     Route::get('/v1/users/all', 'get_members');
 
 
 
