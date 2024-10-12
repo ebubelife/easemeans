@@ -196,7 +196,7 @@ class MembersController extends Controller
             ]);
     
             //check if id exists
-            $member = Members::find($validated["id"]) ;
+            $member = Members::find($validated["user_id"]) ;
     
             if($member){
     
