@@ -43,6 +43,9 @@ Route::controller(MembersController::class)->group(function(){
     //update transaction pin
     Route::post('/v1/update/transaction_pin', 'set_transaction_pin');
 
+    //check transaction pin
+    Route::post('/v1/check/transaction_pin', 'check_transaction_pin');
+
      //get users
     Route::get('/v1/users/all', 'get_members');
 

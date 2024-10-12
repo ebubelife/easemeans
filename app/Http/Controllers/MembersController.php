@@ -242,7 +242,7 @@ class MembersController extends Controller
 
                    }
 
-                    return response()->json(['success' => true, 'status' => 'SUCCESS', 'user_data'=>$member], 200);
+                    return response()->json(['success' => true, 'status' => 'SUCCESS', 'message'=>"login successful",'user_data'=>$member], 200);
                 
             }else{
 
