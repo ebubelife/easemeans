@@ -222,6 +222,42 @@ class MembersController extends Controller
         }
     
 
+        public function check_transaction_pin(Request $request){
+
+            $validated = $request->validate([
+               
+                
+                'user_id' => 'required|string',
+                'pin' => 'required|string'
+    
+            ]);
+    
+            //check if id exists
+            $member = Members::find($validated["user_id"]) ;
+    
+            if($member){
+
+                   if($member->transaction_pin != $validated["pin"] ){
+                    return response()->json(['success' => false, 'status' => 'SUCCESS', 'message'=>"Wrong pin",  'user_data'=>$member], 400);
+
+                   }
+
+                    return response()->json(['success' => true, 'status' => 'SUCCESS', 'user_data'=>$member], 200);
+                
+            }else{
+
+                return response()->json([
+                    'success' =>false,
+                    'status' => 'USER_NOT_EXISTS',
+                    'message' => "User with that ID does not exist" .$validated["user_id"],
+                    
+                ],400);
+
+            }
+
+        }
+    
+
         public function get_members(){
 
             $all = Members::all();
