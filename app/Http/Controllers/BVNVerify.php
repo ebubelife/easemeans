@@ -97,7 +97,11 @@ class BVNVerify extends Controller
         $decodedBody = json_decode($responseBody, true);
 
         $member->bvn = $validated["bvn"];
-        $member->bvn_verification_attempts = $member->bvn_verification_attempts + 1;
+         if($member->bvn_verification_attempts == null){
+            $member->bvn_verification_attempts =  1;
+         }else{
+            $member->bvn_verification_attempts = intval($member->bvn_verification_attempts) + 1;
+         }
         $member->save();
 
         if($decodedBody["statusCode"] != 200 || $decodedBody["statusCode"] != 201){
