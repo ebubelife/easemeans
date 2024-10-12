@@ -96,6 +96,23 @@ class BVNVerify extends Controller
 
         $decodedBody = json_decode($responseBody, true);
 
+        $member->bvn = $validated["bvn"];
+        $member->save();
+
+        if($decodedBody["statusCode"] != 200 || $decodedBody["statusCode"] != 201){
+            //there was an error verifying BVN
+            //return the message received and hope that Safehaven properly documented it😇
+
+            return response()->json([
+                'success' =>false,
+                'status' => 'BVN_VERIFICATION_FAILED',
+                'message' => $decodedBody["message"],
+               // 'bvn_data' =>  $decodedBody
+                
+            ],400);
+
+         }
+
        
         return $decodedBody;
 
@@ -197,6 +214,7 @@ class BVNVerify extends Controller
 
         //save bvn verification state
         $member->bvn_verified = true;
+       
         $member->save();
         return response()->json([
             'success' =>true,
