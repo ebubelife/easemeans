@@ -184,6 +184,42 @@ class MembersController extends Controller
 
 
         }
+
+        public function set_transaction_pin(Request $request){
+
+            $validated = $request->validate([
+               
+                
+                'id' => 'required|string',
+                'pin' => 'required|string'
+    
+            ]);
+    
+            //check if id exists
+            $member = Members::find($validated["id"]) ;
+    
+            if($member){
+    
+                 
+
+                    //save email verification status
+                    $member->transaction_pin = $validated["pin"];
+                    $member->save();
+
+                    return response()->json(['success' => true, 'status' => 'SUCCESS', 'user_data'=>$member], 200);
+                
+            }else{
+
+                return response()->json([
+                    'success' =>false,
+                    'status' => 'USER_NOT_EXISTS',
+                    'message' => "User with that ID does not exist" .$validated["user_id"],
+                    
+                ],400);
+
+            }
+
+        }
     
 
         public function get_members(){

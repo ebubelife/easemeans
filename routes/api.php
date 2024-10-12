@@ -32,16 +32,19 @@ Route::controller(MembersController::class)->group(function(){
     Route::post('/v1/new_account_email_password', 'new_account_email_password');
 
      //verify email - send code to email
-     Route::post('/v1/send_email_otp/{email}', 'send_email_verify_code');
+    Route::post('/v1/send_email_otp/{email}', 'send_email_verify_code');
 
       //resend code to email
-      Route::post('/v1/resend_otp_email', 'resend_otp_email');
+    Route::post('/v1/resend_otp_email', 'resend_otp_email');
 
      //verify email 
-     Route::post('/v1/verify_email', 'verify_email');
+    Route::post('/v1/verify_email', 'verify_email');
+
+    //update transaction pin
+    Route::post('/v1/update/transaction_pin', 'set_transaction_pin');
 
      //get users
-     Route::get('/v1/users/all', 'get_members');
+    Route::get('/v1/users/all', 'get_members');
 
 
 
