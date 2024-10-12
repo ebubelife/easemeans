@@ -127,7 +127,7 @@ class BVNVerify extends Controller
             return response()->json([
                 'success' =>false,
                 'status' => 'USER_NOT_EXISTS',
-                'message' => "User with that ID does not exist",
+                'message' => "User with that ID does not exist" .$validated["user_id"],
                 
             ],400);
          }
