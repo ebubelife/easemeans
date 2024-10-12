@@ -105,7 +105,7 @@ class MembersController extends Controller
                 Log::error('Error sending email: ' . $e->getMessage());
                 
             
-               // return response()->json(['success' => false, 'message' => $e->getMessage()], 400);
+                return response()->json(['success' => false,  'message' => $e->getMessage()], 400);
                return false;
             }
     

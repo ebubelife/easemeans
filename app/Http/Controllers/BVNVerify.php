@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Models\Members;
 use App\Http\Controllers\SafeHaven;
 use GuzzleHttp\Client;
+use Exception;
+use Illuminate\Support\Facades\Log;
 
 class BVNVerify extends Controller
 {
@@ -131,6 +133,7 @@ class BVNVerify extends Controller
          }
 
 
+        
          $safe_haven = new SafeHaven();
          $swap_assertion = $safe_haven->exchange_safehaven_client_assertion();
  
@@ -173,15 +176,32 @@ class BVNVerify extends Controller
          $responseBody = $postResponse->getBody()->getContents();
  
          $decodedBody = json_decode($responseBody, true);
+
+         
+
+         if($decodedBody["statusCode"] == 400){
+            //there was an error verifying BVN
+            //return the message received and hope that Safehaven properly documented it😇
+
+            return response()->json([
+                'success' =>false,
+                'status' => 'BVN_VERIFICATION_FAILED',
+                'message' => $decodedBody["message"],
+               // 'bvn_data' =>  $decodedBody
+                
+            ],400);
+
+         }
  
-        
+        //Else it means it worked and bvn is verified
         return response()->json([
             'success' =>true,
             'status' => 'SUCCESS',
             'message' => "BVN successfully verified",
             'bvn_data' =>  $decodedBody
             
-        ],400);
+        ],200);
+         
          
         
 
