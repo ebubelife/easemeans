@@ -104,7 +104,7 @@ class BVNVerify extends Controller
          }
         $member->save();
 
-        return $decodedBody["statusCode"];
+        return $decodedBody;
 
         if($decodedBody["statusCode"] != 200 || $decodedBody["statusCode"] != 201){
             //there was an error verifying BVN
@@ -121,7 +121,7 @@ class BVNVerify extends Controller
          }
 
        
-        
+         return $decodedBody;
 
        
 
