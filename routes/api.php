@@ -73,3 +73,8 @@ Route::controller(BVNVerify::class)->group(function(){
 
 
 });
+
+Route::get('/v1/test', function(){
+    return "Hello world";
+});
+   
