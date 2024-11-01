@@ -70,7 +70,7 @@ class VirtualAccountsController extends Controller
        
          
          $body = json_encode([
-             'type' => $type,
+             'identityTyp' => $type,
              'identityId' => $validated["request_id"],
              'otp' => $validated["code"],
              'identityNumber' => $member->bvn,
