@@ -55,7 +55,7 @@ class VirtualAccountsController extends Controller
          $client = new Client();
  
          // Define the request parameters
-         $url = 'https://api.safehavenmfb.com/identity/v2/subaccount';
+         $url = 'https://api.safehavenmfb.com/accounts/v2/subaccount';
  
          $headers = [
              'ClientID' => $ibs_client_id,
