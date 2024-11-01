@@ -74,7 +74,7 @@ class VirtualAccountsController extends Controller
              'identityId' => $validated["request_id"],
              'otp' => $validated["code"],
              'identityNumber' => $member->bvn,
-             'phoneNumber' => $member->phone,
+             'phoneNumber' => '+234 ' . substr($member->phone, 1),
              'emailAddress' => $member->email,
              'externalReference' => $member->email . $member->phone
          ]);
