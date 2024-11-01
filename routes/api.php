@@ -5,6 +5,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MembersController;
 use App\Http\Controllers\SafeHaven;
 use App\Http\Controllers\BVNVerify;
+use App\Http\Controllers\VirtualAccountsController;
+use App\Models\VirtualAccounts;
 
 /*
 |--------------------------------------------------------------------------
@@ -69,6 +71,18 @@ Route::controller(BVNVerify::class)->group(function(){
 
     //verify BVN otp
     Route::post('/v1/verify_bvn_otp', 'verify_bvn_otp');
+
+
+
+});
+
+
+Route::controller(VirtualAccountsController::class)->group(function(){
+
+    //create sub account
+    Route::post('/v1/create_subaccount', 'create_sub_account');
+
+  
 
 
 

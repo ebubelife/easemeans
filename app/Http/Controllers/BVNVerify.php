@@ -45,7 +45,7 @@ class BVNVerify extends Controller
                 'status' => 'BVN_FORMAT_WRONG',
                 'message' => "BVN must be an 11-digit number",
                 'user_data' => $member
-            ],401);
+            ],400);
 
          }
 
@@ -116,7 +116,7 @@ class BVNVerify extends Controller
                 'message' => $decodedBody["message"],
                // 'bvn_data' =>  $decodedBody
                 
-            ],400);
+            ],401);
 
          }
 
@@ -153,7 +153,7 @@ class BVNVerify extends Controller
                 'status' => 'USER_NOT_EXISTS',
                 'message' => "User with that ID does not exist" .$validated["user_id"],
                 
-            ],400);
+            ],401);
          }
 
 
@@ -213,7 +213,7 @@ class BVNVerify extends Controller
                 'message' => $decodedBody["message"],
                // 'bvn_data' =>  $decodedBody
                 
-            ],400);
+            ],401);
 
          }
  
@@ -221,6 +221,7 @@ class BVNVerify extends Controller
 
         //save bvn verification state
         $member->bvn_verified = true;
+       // $member->dob = $decodedBody["dateOfBirth"];
        
         $member->save();
 
@@ -228,7 +229,7 @@ class BVNVerify extends Controller
             'success' =>true,
             'status' => 'SUCCESS',
             'message' => "BVN successfully verified",
-            'bvn_data' =>  $decodedBody,
+            'bvn_data' =>  $decodedBody["data"]["providerResponse"],
             'user_data' => $member
             
         ],200);
