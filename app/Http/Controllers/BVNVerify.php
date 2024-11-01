@@ -222,6 +222,7 @@ class BVNVerify extends Controller
         //save bvn verification state
         $member->bvn_verified = true;
         $member->dob = $decodedBody["data"]["providerResponse"]["dateOfBirth"];
+        $member->phone = $decodedBody["data"]["providerResponse"]["phoneNumber1"];
        
         $member->save();
 
