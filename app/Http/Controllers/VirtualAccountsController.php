@@ -70,7 +70,7 @@ class VirtualAccountsController extends Controller
        
          
          $body = json_encode([
-             'identityTyp' => $type,
+             'identityType' => $type,
              'identityId' => $validated["request_id"],
              'otp' => $validated["code"],
              'identityNumber' => $member->bvn,
@@ -102,7 +102,7 @@ class VirtualAccountsController extends Controller
 
             return response()->json([
                 'success' =>false,
-                'status' => 'BVN_VERIFICATION_FAILED',
+                'status' => 'OPERATION_FAILED',
                 'message' => $decodedBody["message"],
                // 'bvn_data' =>  $decodedBody
                 
