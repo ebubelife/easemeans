@@ -59,14 +59,14 @@ class VirtualAccountsController extends Controller
  
          $headers = [
              'ClientID' => $ibs_client_id,
-             'authorization' => 'Bearer '.$access_token,
+             'authorization' => 'Bearer '.'djhd',
              'accept' => 'application/json',
              'content-type' => 'application/json',
              
  
          ];
  
-         $type = "BVN"; 
+         $type = "BVN"; $async = false;
        
          
          $body = json_encode([
@@ -76,7 +76,8 @@ class VirtualAccountsController extends Controller
              'identityNumber' => $member->bvn,
              'phoneNumber' => '+234 ' . substr($member->phone, 1),
              'emailAddress' => $member->email,
-             'externalReference' => $member->email . $member->phone
+             'externalReference' => $member->email . $member->phone,
+            // 'async' => $async,
          ]);
   
          // POST request using the created object
