@@ -59,7 +59,7 @@ class VirtualAccountsController extends Controller
  
          $headers = [
              'ClientID' => $ibs_client_id,
-             'authorization' => 'Bearer '.'djhd',
+             'authorization' => 'Bearer '.$access_token,
              'accept' => 'application/json',
              'content-type' => 'application/json',
              
