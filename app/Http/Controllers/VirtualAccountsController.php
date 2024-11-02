@@ -76,7 +76,7 @@ class VirtualAccountsController extends Controller
              'identityNumber' => $member->bvn,
              'phoneNumber' => '+234 ' . substr($member->phone, 1),
              'emailAddress' => $member->email,
-             'externalReference' => $member->email . $member->phone,
+             'externalReference' => 'AC_adh88',
             // 'async' => $async,
          ]);
   
