@@ -71,9 +71,9 @@ class VirtualAccountsController extends Controller
          
          $body = json_encode([
              'identityType' => $type,
-             'identityId' => $validated["request_id"],
-             'otp' => $validated["code"],
-             'identityNumber' => $member->bvn,
+            // 'identityId' => $validated["request_id"],
+           //  'otp' => $validated["code"],
+           //  'identityNumber' => $member->bvn,
              'phoneNumber' => '+234 ' . substr($member->phone, 1),
              'emailAddress' => $member->email,
              'externalReference' => 'AC_adh88',
