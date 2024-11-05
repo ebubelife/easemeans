@@ -82,6 +82,13 @@ Route::controller(VirtualAccountsController::class)->group(function(){
     //create sub account
     Route::post('/v1/create_subaccount', 'create_sub_account');
 
+    //get sub accounts
+    Route::get('/v1/accounts/get', 'get_sub_accounts');
+
+
+     //get  account
+     Route::get('/v1/account/{id}', 'get_account');
+
   
 
 

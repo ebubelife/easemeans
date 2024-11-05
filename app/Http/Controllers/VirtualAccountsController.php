@@ -123,9 +123,91 @@ class VirtualAccountsController extends Controller
         return response()->json([
             'success' =>true,
             'status' => 'SUCCESS',
-            'message' => "BVN successfully verified",
-            'bvn_data' =>  $decodedBody,
+            'message' => "User sub account successfully created",
+            'response_data' =>  $decodedBody,
             'user_data' => $member
+            
+        ],200);
+         
+         
+        
+
+
+    }
+
+    public function get_sub_accounts(Request $request)
+    {
+
+        /* This method will get all the sub accounts 
+        https://safehavenmfb.readme.io/reference/create-sub-account-new
+
+        */
+
+     
+
+        
+         $safe_haven = new SafeHaven();
+         $swap_assertion = $safe_haven->exchange_safehaven_client_assertion();
+ 
+         $access_token = $swap_assertion["access_token"];
+         $ibs_client_id = $swap_assertion["ibs_client_id"];
+ 
+         $client = new Client();
+ 
+         // Define the request parameters
+         $url = 'https://api.safehavenmfb.com/accounts?page=0&limit=100&isSubAccount=true';
+ 
+         $headers = [
+             'ClientID' => $ibs_client_id,
+             'authorization' => 'Bearer '.$access_token,
+             'accept' => 'application/json',
+             'content-type' => 'application/json',
+             
+ 
+         ];
+ 
+         
+         
+     
+  
+         // POST request using the created object
+         $postResponse = $client->post($url, [
+             'headers' => $headers,
+            
+         ]);
+ 
+         // Get the response code
+         $responseCode = $postResponse->getStatusCode();
+ 
+         // Get the response body
+         $responseBody = $postResponse->getBody()->getContents();
+ 
+         $decodedBody = json_decode($responseBody, true);
+
+         
+
+         if($decodedBody["statusCode"] == 400){
+            //there was an error verifying BVN
+            //return the message received and hope that Safehaven properly documented it😇
+
+            return response()->json([
+                'success' =>false,
+                'status' => 'OPERATION_FAILED',
+                'message' => $decodedBody["message"],
+               // 'bvn_data' =>  $decodedBody
+                
+            ],400);
+
+         }
+ 
+       
+
+        return response()->json([
+            'success' =>true,
+            'status' => 'SUCCESS',
+            'message' => "Accounts retrieved successfully",
+            'accounts' =>  $decodedBody,
+           
             
         ],200);
          
@@ -146,6 +228,90 @@ class VirtualAccountsController extends Controller
         return $randomString;
     }
     
+
+    public function get_sub_account_single($_id)
+    {
+
+        /* This method will get one single account by id
+        https://safehavenmfb.readme.io/reference/create-sub-account-new
+
+        */
+
+     
+
+        
+         $safe_haven = new SafeHaven();
+         $swap_assertion = $safe_haven->exchange_safehaven_client_assertion();
+ 
+         $access_token = $swap_assertion["access_token"];
+         $ibs_client_id = $swap_assertion["ibs_client_id"];
+ 
+         $client = new Client();
+ 
+         // Define the request parameters
+         $url = 'https://api.safehavenmfb.com/accounts/'.$_id;;
+ 
+         $headers = [
+             'ClientID' => $ibs_client_id,
+             'authorization' => 'Bearer '.$access_token,
+             'accept' => 'application/json',
+             'content-type' => 'application/json',
+             
+ 
+         ];
+ 
+         
+         
+     
+  
+         // POST request using the created object
+         $postResponse = $client->post($url, [
+             'headers' => $headers,
+            
+         ]);
+ 
+         // Get the response code
+         $responseCode = $postResponse->getStatusCode();
+ 
+         // Get the response body
+         $responseBody = $postResponse->getBody()->getContents();
+ 
+         $decodedBody = json_decode($responseBody, true);
+
+         
+
+         if($decodedBody["statusCode"] == 400){
+            //there was an error verifying BVN
+            //return the message received and hope that Safehaven properly documented it😇
+
+            return response()->json([
+                'success' =>false,
+                'status' => 'OPERATION_FAILED',
+                'message' => $decodedBody["message"],
+               // 'bvn_data' =>  $decodedBody
+                
+            ],400);
+
+         }
+ 
+       
+
+        return response()->json([
+            'success' =>true,
+            'status' => 'SUCCESS',
+            'message' => "BVN successfully verified",
+            'account_data' =>  $decodedBody,
+           
+            
+        ],200);
+         
+         
+        
+
+
+    }
+
+  
    
     
 
