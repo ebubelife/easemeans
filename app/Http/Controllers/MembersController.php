@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Members;
 use Illuminate\Http\Request;
 use App\Http\Controllers\SafeHaven;
+use App\Http\Controllers\VirtualAccountsController;
 use App\Mail\NewUserEmailCode;
+use App\Models\VirtualAccounts;
 use Illuminate\Support\Facades\Mail;
 use Exception;
 use Illuminate\Support\Facades\Log;
@@ -236,6 +238,16 @@ class MembersController extends Controller
             $member = Members::find($validated["user_id"]) ;
     
             if($member){
+
+                   $member_safehaven_info = json_decode($member->safehaven_account_data);
+
+
+                   //update sub account information from endpoint
+                   $sub_account_controller = new VirtualAccountsController();
+                   $create_sub_account = $sub_account_controller->get_sub_account_single($member_safehaven_info["_id"], $validated["user_id"]);
+
+                   //refresh user data object from database
+                   $member = Members::find($validated["user_id"]) ;
 
                    if($member->transaction_pin != $validated["pin"] ){
                     return response()->json(['success' => false, 'status' => 'SUCCESS', 'message'=>"Wrong pin",  'user_data'=>$member], 400);

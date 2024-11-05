@@ -30,7 +30,7 @@ class VirtualAccountsController extends Controller
 
         ]);
 
-         //check if email exists
+         //check if user exists
          $member = Members::find($validated["user_id"]);
 
        
@@ -229,13 +229,27 @@ class VirtualAccountsController extends Controller
     }
     
 
-    public function get_sub_account_single($_id)
+    public function get_sub_account_single($_id, $user_id)
     {
 
         /* This method will get one single account by id
         https://safehavenmfb.readme.io/reference/create-sub-account-new
 
         */
+
+         //check if user exists
+         $member = Members::find($user_id);
+
+       
+
+         if(!$member){
+            return response()->json([
+                'success' =>false,
+                'status' => 'USER_NOT_EXISTS',
+                'message' => "User with that ID does not exist" .$user_id,
+                
+            ],400);
+         }
 
      
 
@@ -293,7 +307,14 @@ class VirtualAccountsController extends Controller
             ],400);
 
          }
- 
+
+         //update the member's safehaven account data in the database
+
+         $member->safehaven_account_data = $decodedBody["data"];
+         $member->deposit_balance = $decodedBody["data"]["accountBalance"];
+         $member->save();
+
+
        
 
         return response()->json([
