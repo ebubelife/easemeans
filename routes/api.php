@@ -87,7 +87,7 @@ Route::controller(VirtualAccountsController::class)->group(function(){
 
 
      //get  account
-     Route::get('/v1/account/{id}', 'get_sub_account_single');
+     Route::get('/v1/account/{_id}/{user_id}', 'get_sub_account_single');
 
   
 
