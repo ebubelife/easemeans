@@ -242,9 +242,9 @@ class MembersController extends Controller
                    $member_safehaven_info = json_decode($member->safehaven_account_data);
 
 
-                   //update sub account information from endpoint
+                   //update subaccount information from endpoint
                    $sub_account_controller = new VirtualAccountsController();
-                   $create_sub_account = $sub_account_controller->get_sub_account_single($member_safehaven_info["_id"], $validated["user_id"]);
+                   $create_sub_account = $sub_account_controller->get_sub_account_single($member_safehaven_info->_id, $validated["user_id"]);
 
                    //refresh user data object from database
                    $member = Members::find($validated["user_id"]) ;
