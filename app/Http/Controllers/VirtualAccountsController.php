@@ -116,6 +116,7 @@ class VirtualAccountsController extends Controller
 
         //save bvn verification state
         $member->bvn_verified = true;
+        $member->safehaven_numbe = $decodedBody["data"];
        
         $member->save();
 
