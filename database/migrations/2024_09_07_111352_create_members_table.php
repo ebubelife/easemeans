@@ -44,7 +44,7 @@ return new class extends Migration
             
             $table->text("address")->nullable();
 
-            $table->text("safehaven_number")->nullable();
+            $table->text("safehaven_account_data")->nullable();
  
             $table->text("image")->nullable();
 
