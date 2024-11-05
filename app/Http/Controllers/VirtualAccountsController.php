@@ -67,6 +67,8 @@ class VirtualAccountsController extends Controller
          ];
  
          $type = "BVN"; $async = false;
+
+         $external_reference = $this->generate_external_reference();
        
          
          $body = json_encode([
@@ -76,7 +78,7 @@ class VirtualAccountsController extends Controller
              'identityNumber' => $member->bvn,
              'phoneNumber' => '+234 ' . substr($member->phone, 1),
              'emailAddress' => $member->email,
-             'externalReference' => 'AC_adh88',
+             'externalReference' => $external_reference,
             // 'async' => $async,
          ]);
   
@@ -132,6 +134,17 @@ class VirtualAccountsController extends Controller
 
     }
 
+    function generateRandomString($length = 10) {
+        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $charactersLength = strlen($characters);
+        $randomString = '';
+        for ($i = 0; $i < $length; $i++) {
+            $randomString .= $characters[rand(0, $charactersLength - 1)];
+        }
+        return $randomString;
+    }
+    
+   
     
 
 }
