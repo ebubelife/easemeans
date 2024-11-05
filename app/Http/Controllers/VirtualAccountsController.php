@@ -68,7 +68,7 @@ class VirtualAccountsController extends Controller
  
          $type = "BVN"; $async = false;
 
-         $external_reference = $this->generate_external_reference();
+         $external_reference = $this->generateRandomString();
        
          
          $body = json_encode([
@@ -135,6 +135,7 @@ class VirtualAccountsController extends Controller
     }
 
     function generateRandomString($length = 10) {
+        //the string generated will be 10 characters long and used as external reference parameter in create sub account endpoint
         $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
         $charactersLength = strlen($characters);
         $randomString = '';
