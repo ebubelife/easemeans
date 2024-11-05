@@ -171,7 +171,7 @@ class VirtualAccountsController extends Controller
      
   
          // POST request using the created object
-         $postResponse = $client->post($url, [
+         $postResponse = $client->get($url, [
              'headers' => $headers,
             
          ]);
