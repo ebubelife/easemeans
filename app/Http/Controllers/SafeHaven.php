@@ -71,7 +71,7 @@ class SafeHaven extends Controller
         $client = new Client();
  
         // Define the request parameters
-        $url = 'https://api.sandbox.safehavenmfb.com/vas/services';
+        $url = 'https://api.safehavenmfb.com/vas/services';
 
         $headers = [
             'ClientID' => $ibs_client_id,
