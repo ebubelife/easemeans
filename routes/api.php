@@ -67,7 +67,8 @@ Route::controller(SafeHaven::class)->group(function(){
      Route::get('/v1/get_service_categories/{service_id}', 'get_service_categories');
 
      //get safe haven services categories
-     Route::get('/v1/get_products/{service_id}', 'get_products');
+     //to get the service category id parameter, run the request to endpoint to get all services category and use the id for  any of them
+     Route::get('/v1/get_products/{service_category_id}', 'get_products');
      
 
 

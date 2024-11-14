@@ -189,7 +189,7 @@ class SafeHaven extends Controller
 
     }
 
-    public function get_products(Request $request, $service_id){
+    public function get_products(Request $request, $service_category_id){
         //https://safehavenmfb.readme.io/reference/get-category-products
 
         $safe_haven_access_cred = $this->exchange_safehaven_client_assertion();
@@ -199,7 +199,7 @@ class SafeHaven extends Controller
         $client = new Client();
  
         // Define the request parameters
-        $url = 'https://api.safehavenmfb.com/vas/service-category/'.$service_id.'/products';
+        $url = 'https://api.safehavenmfb.com/vas/service-category/'.$service_category_id.'/products';
 
         $headers = [
             'ClientID' => $ibs_client_id,
