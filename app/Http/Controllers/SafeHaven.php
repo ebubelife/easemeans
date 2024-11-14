@@ -233,7 +233,7 @@ class SafeHaven extends Controller
            return response()->json([
                'success' =>false,
                'status' => 'OPERATION_FAILED',
-               'message' => $decodedBody["message"],
+               'message' => $decodedBody,
               // 'bvn_data' =>  $decodedBody
                
            ],400);
