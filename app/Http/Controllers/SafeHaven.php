@@ -127,13 +127,127 @@ class SafeHaven extends Controller
         
     }
 
-    public function get_service_categories(Request $request){
+    public function get_service_categories(Request $request, $service_id){
         //https://safehavenmfb.readme.io/reference/get-service-categories
+
+        $safe_haven_access_cred = $this->exchange_safehaven_client_assertion();
+        $access_token  = $safe_haven_access_cred["access_token"];
+        $ibs_client_id = $safe_haven_access_cred["ibs_client_id"];
+
+        $client = new Client();
+ 
+        // Define the request parameters
+        $url = 'https://api.sandbox.safehavenmfb.com/vas/service/'.$service_id.'/service-categories';
+
+        $headers = [
+            'ClientID' => $ibs_client_id,
+            'authorization' => 'Bearer '.$access_token,
+            'accept' => 'application/json',
+            'content-type' => 'application/json',
+            
+
+        ];
+
+         // POST request using the created object
+         $postResponse = $client->get($url, [
+            'headers' => $headers,
+            
+        ]);
+
+        // Get the response code
+        $responseCode = $postResponse->getStatusCode();
+
+        // Get the response body
+        $responseBody = $postResponse->getBody()->getContents();
+
+        $decodedBody = json_decode($responseBody, true);
+
+        
+
+        if($decodedBody["statusCode"] == 400){
+           //there was an error verifying BVN
+           //return the message received and hope that Safehaven properly documented it😇
+
+           return response()->json([
+               'success' =>false,
+               'status' => 'OPERATION_FAILED',
+               'message' => $decodedBody["message"],
+              // 'bvn_data' =>  $decodedBody
+               
+           ],400);
+
+        }
+
+        return response()->json([
+            'success' =>true,
+            'status' => 'SUCCESS',
+            'message' => "Services retrieved successfully",
+            'response_data' =>  $decodedBody,
+            
+            
+        ],200);
 
     }
 
-    public function get_products(Request $request){
+    public function get_products(Request $request, $service_id){
         //https://safehavenmfb.readme.io/reference/get-category-products
+
+        $safe_haven_access_cred = $this->exchange_safehaven_client_assertion();
+        $access_token  = $safe_haven_access_cred["access_token"];
+        $ibs_client_id = $safe_haven_access_cred["ibs_client_id"];
+
+        $client = new Client();
+ 
+        // Define the request parameters
+        $url = 'https://api.sandbox.safehavenmfb.com/vas/service-category/'.$service_id.'/products';
+
+        $headers = [
+            'ClientID' => $ibs_client_id,
+            'authorization' => 'Bearer '.$access_token,
+            'accept' => 'application/json',
+            'content-type' => 'application/json',
+            
+
+        ];
+
+         // POST request using the created object
+         $postResponse = $client->get($url, [
+            'headers' => $headers,
+            
+        ]);
+
+        // Get the response code
+        $responseCode = $postResponse->getStatusCode();
+
+        // Get the response body
+        $responseBody = $postResponse->getBody()->getContents();
+
+        $decodedBody = json_decode($responseBody, true);
+
+        
+
+        if($decodedBody["statusCode"] == 400){
+           //there was an error verifying BVN
+           //return the message received and hope that Safehaven properly documented it😇
+
+           return response()->json([
+               'success' =>false,
+               'status' => 'OPERATION_FAILED',
+               'message' => $decodedBody["message"],
+              // 'bvn_data' =>  $decodedBody
+               
+           ],400);
+
+        }
+
+        return response()->json([
+            'success' =>true,
+            'status' => 'SUCCESS',
+            'message' => "Services retrieved successfully",
+            'response_data' =>  $decodedBody,
+            
+            
+        ],200);
         
     }
 

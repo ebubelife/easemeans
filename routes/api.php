@@ -64,10 +64,10 @@ Route::controller(SafeHaven::class)->group(function(){
      Route::get('/v1/get_services', 'get_services');
 
      //get safe haven services categories
-     Route::get('/v1/get_service_categories', 'get_service_categories');
+     Route::get('/v1/get_service_categories/{service_id}', 'get_service_categories');
 
      //get safe haven services categories
-     Route::get('/v1/get_products', 'get_products');
+     Route::get('/v1/get_products/{service_id}', 'get_products');
      
 
 
