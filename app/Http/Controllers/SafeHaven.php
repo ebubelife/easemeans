@@ -137,7 +137,7 @@ class SafeHaven extends Controller
         $client = new Client();
  
         // Define the request parameters
-        $url = 'https://api.sandbox.safehavenmfb.com/vas/service/'.$service_id.'/service-categories';
+        $url = 'https://api.safehavenmfb.com/vas/service/'.$service_id.'/service-categories';
 
         $headers = [
             'ClientID' => $ibs_client_id,
@@ -199,7 +199,7 @@ class SafeHaven extends Controller
         $client = new Client();
  
         // Define the request parameters
-        $url = 'https://api.sandbox.safehavenmfb.com/vas/service-category/'.$service_id.'/products';
+        $url = 'https://api.safehavenmfb.com/vas/service-category/'.$service_id.'/products';
 
         $headers = [
             'ClientID' => $ibs_client_id,
