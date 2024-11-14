@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use GuzzleHttp\Client;
 
+
 class SafeHaven extends Controller
 {
     
@@ -56,6 +57,83 @@ class SafeHaven extends Controller
 
         return $decodedBody;
 
+        
+    }
+
+    public function get_services(Request $request){
+    
+        //https://api.sandbox.safehavenmfb.com/vas/services
+
+        $safe_haven_access_cred = $this->exchange_safehaven_client_assertion();
+        $access_token  = $safe_haven_access_cred["access_token"];
+        $ibs_client_id = $safe_haven_access_cred["ibs_client_id"];
+
+        $client = new Client();
+ 
+        // Define the request parameters
+        $url = 'https://api.sandbox.safehavenmfb.com/vas/services';
+
+        $headers = [
+            'ClientID' => $ibs_client_id,
+            'authorization' => 'Bearer '.$access_token,
+            'accept' => 'application/json',
+            'content-type' => 'application/json',
+            
+
+        ];
+
+         // POST request using the created object
+         $postResponse = $client->get($url, [
+            'headers' => $headers,
+            
+        ]);
+
+        // Get the response code
+        $responseCode = $postResponse->getStatusCode();
+
+        // Get the response body
+        $responseBody = $postResponse->getBody()->getContents();
+
+        $decodedBody = json_decode($responseBody, true);
+
+        
+
+        if($decodedBody["statusCode"] == 400){
+           //there was an error verifying BVN
+           //return the message received and hope that Safehaven properly documented it😇
+
+           return response()->json([
+               'success' =>false,
+               'status' => 'OPERATION_FAILED',
+               'message' => $decodedBody["message"],
+              // 'bvn_data' =>  $decodedBody
+               
+           ],400);
+
+        }
+
+        return response()->json([
+            'success' =>true,
+            'status' => 'SUCCESS',
+            'message' => "Services retrieved successfully",
+            'response_data' =>  $decodedBody,
+            
+            
+        ],200);
+
+
+
+        
+        
+    }
+
+    public function get_service_categories(Request $request){
+        //https://safehavenmfb.readme.io/reference/get-service-categories
+
+    }
+
+    public function get_products(Request $request){
+        //https://safehavenmfb.readme.io/reference/get-category-products
         
     }
 

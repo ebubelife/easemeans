@@ -60,6 +60,16 @@ Route::controller(SafeHaven::class)->group(function(){
      //generate token
      Route::get('/v1/generate_token', 'exchange_safehaven_client_assertion');
 
+     //get safe haven services
+     Route::get('/v1/get_services', 'get_services');
+
+     //get safe haven services categories
+     Route::get('/v1/get_service_categories', 'get_service_categories');
+
+     //get safe haven services categories
+     Route::get('/v1/get_products', 'get_products');
+     
+
 
 
 });
