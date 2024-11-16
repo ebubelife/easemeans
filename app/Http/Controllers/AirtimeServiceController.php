@@ -17,7 +17,7 @@ class AirtimeServiceController extends Controller
         $validated = $request->validate([
                
                 
-            'id' => 'required|string',
+            'user_id' => 'required|string',
             'amount' => 'required|string',
             'network'  => 'required|string',
             'phone'  => 'required|string',
@@ -26,7 +26,7 @@ class AirtimeServiceController extends Controller
         ]);
 
          //check if email exists
-         $member = Members::find($validated["id"]);
+         $member = Members::find($validated["user_id"]);
 
          $length = strlen($validated["bvn"]);
 
