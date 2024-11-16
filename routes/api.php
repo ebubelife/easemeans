@@ -7,6 +7,7 @@ use App\Http\Controllers\SafeHaven;
 use App\Http\Controllers\BVNVerify;
 use App\Http\Controllers\VirtualAccountsController;
 use App\Http\Controllers\AirtimeServiceController;
+use App\Http\Controllers\TransactionsController;
 use App\Models\AirtimeService;
 use App\Models\VirtualAccounts;
 
@@ -112,6 +113,24 @@ Route::controller(AirtimeServiceController::class)->group(function(){
 
     //create sub account
     Route::post('/v1/airtime/purchase', 'purchase');
+
+  
+
+
+
+});
+
+
+Route::controller(TransactionsController::class)->group(function(){
+
+    //get all transactions
+    Route::get('/v1/transactions/all', 'get_all');
+
+    //get all transactions by user
+    Route::get('/v1/transactions/user/all/{user_id}', 'get_all_user');
+
+    //get one transactions by user
+    Route::get('/v1/transactions/user/single/{user_id}', 'get_all_user_single');
 
   
 
