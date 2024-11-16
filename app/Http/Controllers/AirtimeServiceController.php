@@ -151,7 +151,8 @@ class AirtimeServiceController extends Controller
             'status' => 'SUCCESS',
             'message' => "AIRTIME successfully purchased",
             'data' =>  $decodedBody["data"],
-            'user_data' => $member
+            'user_data' => $member,
+            'date' => $transaction->created_at
             
         ],200);
          
