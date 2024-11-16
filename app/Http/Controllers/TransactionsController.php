@@ -41,7 +41,10 @@ class TransactionsController extends Controller
             ],400);
          }
 
-        $txn = Transactions::where('user_id', $user_id)->get();
+         $txn = Transactions::where('user_id', $user_id)
+         ->orderBy('created_at', 'desc') // Order by newest first
+         ->get();
+     
 
         return response()->json([
             'success' =>true,
@@ -73,7 +76,8 @@ class TransactionsController extends Controller
          }
 
 
-        $txn = Transactions::where('user_id', $user_id)->where('id', $transaction_id)->get();
+        $txn = Transactions::where('user_id', $user_id)->where('id', $transaction_id)  ->orderBy('created_at', 'desc') // Order by newest first
+        ->get();
         return response()->json([
             'success' =>true,
             'status' => 'SUCCESS',
