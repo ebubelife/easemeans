@@ -45,6 +45,8 @@ class AirtimeServiceController extends Controller
         $access_token = $swap_assertion["access_token"];
         $ibs_client_id = $swap_assertion["ibs_client_id"];
         $debitAccountNumber = "0114762128";
+
+        //set the default service  category id to MTN's
         $service_category_id = "61efacbcda92348f9dde5f92";
 
         $client = new Client();
