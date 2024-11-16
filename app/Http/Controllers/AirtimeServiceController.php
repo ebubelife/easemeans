@@ -131,7 +131,7 @@ class AirtimeServiceController extends Controller
          $transaction->service = "AIRTIME";
          $transaction->category = $validated["network"];
          $transaction->amount = $validated["amount"];
-         $transaction->tx_detail = $decodedBody["data"];
+         $transaction->tx_detail = json_encode($decodedBody["data"]);
          $transaction->status = "SUCCESS";
          $transaction->save();
 
