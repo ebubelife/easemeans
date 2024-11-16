@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\SafeHaven;
 use GuzzleHttp\Client;
 use App\Models\Members;
-use App\Models\transactions;
+use App\Models\Transactions;
 use App\Http\Controllers\VirtualAccountsController;
 
 class AirtimeServiceController extends Controller
