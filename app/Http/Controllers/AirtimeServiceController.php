@@ -83,7 +83,7 @@ class AirtimeServiceController extends Controller
          $body = json_encode([
            
             'serviceCategoryId' => $service_category_id,
-            'amount' => $validated["amount"],
+            'amount' => floatval($validated["amount"]),
             'channel' => 'WEB',
             'debitAccountNumber' => $debitAccountNumber,
             'phoneNumber' => $validated["phone"],
