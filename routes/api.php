@@ -124,13 +124,13 @@ Route::controller(AirtimeServiceController::class)->group(function(){
 Route::controller(TransactionsController::class)->group(function(){
 
     //get all transactions
-    Route::get('/v1/transactions/all', 'get_all');
+    Route::get('/v1/transactions/all', 'get_all_tx');
 
     //get all transactions by user
-    Route::get('/v1/transactions/user/all/{user_id}', 'get_all_user');
+    Route::get('/v1/transactions/user/all/{user_id}', 'get_all_user_tx');
 
     //get one transactions by user
-    Route::get('/v1/transactions/user/single/{user_id}', 'get_all_user_single');
+    Route::get('/v1/transactions/user/single/{user_id}', 'get_user_single_tx');
 
   
 
