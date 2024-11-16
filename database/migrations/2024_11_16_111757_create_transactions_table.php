@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string("service")->nullable();
             $table->string("category")->nullable();
             $table->string("amount")->nullable();
-            $table->text("tx_detail")->nullable();
+            $table->longText("tx_detail")->nullable();
             $table->string("status")->nullable();
             $table->timestamps();
         });
