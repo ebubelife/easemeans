@@ -38,6 +38,14 @@ class AirtimeServiceController extends Controller
                 
             ],400);
          }
+         $user_safehaven_info = json_decode($member->safehaven_account_data);
+         $user_account_number = $user_safehaven_info->accountNumber;
+
+         return response()->json([
+            'success' =>true,
+             'msg' =>$user_account_number
+            
+        ],200);
 
         $safe_haven = new SafeHaven();
         $swap_assertion = $safe_haven->exchange_safehaven_client_assertion();
@@ -85,7 +93,7 @@ class AirtimeServiceController extends Controller
             'serviceCategoryId' => $service_category_id,
             'amount' => floatval($validated["amount"]),
             'channel' => 'WEB',
-            'debitAccountNumber' => $debitAccountNumber,
+            'debitAccountNumber' => $user_account_number, //deduct the amount from the user's account on safehaven
             'phoneNumber' => $validated["phone"],
         ]);
  
