@@ -25,7 +25,7 @@ class AirtimeServiceController extends Controller
 
         ]);
 
-         //check if email exists
+         //check if user exists
          $member = Members::find($validated["user_id"]);
 
          
@@ -139,6 +139,9 @@ class AirtimeServiceController extends Controller
          $transaction->status = "SUCCESS";
          $transaction->save();
 
+
+        //refresh user data from db
+        $member = Members::find($validated["user_id"]);
 
 
 
