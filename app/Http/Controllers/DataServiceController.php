@@ -57,7 +57,7 @@ class DataServiceController extends Controller
 
          $isvalid_nigerian_phone = $this->isValidNigerianNumber($validated["phone"]);
 
-         if(!$isvalid_nigerian_phone){
+         if($isvalid_nigerian_phone==false){
             return response()->json([
                 'success' =>false,
                 'status' => 'INVALID_PHONE_NUMBER',
