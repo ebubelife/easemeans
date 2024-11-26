@@ -51,7 +51,7 @@ class AirtimeServiceController extends Controller
 
          */
 
-         $isvalid_nigerian_phone = $this->isValidNigerianNumber($validated["phone"]);
+         $isvalid_nigerian_phone = $this->validate_phone_number($validated["phone"]);
 
          if($isvalid_nigerian_phone==false){
             return response()->json([
@@ -185,22 +185,14 @@ class AirtimeServiceController extends Controller
 
     }
 
-    function isValidNigerianNumber($number) {
-        // Remove spaces, dashes, or parentheses
-        $number = preg_replace('/[\s\-\(\)]+/', '', $number);
-    
-        // Replace country code +234 or 234 with 0
-        if (preg_match('/^\+?234/', $number)) {
-            $number = preg_replace('/^\+?234/', '0', $number);
+    function validate_phone_number($phone) {
+        $pattern = '/^234[0-9]{11}/';
+        if(preg_match($pattern,$phone)){
+            return true; 
         }
     
-        // Check if the number matches the Nigerian number format
-        if (preg_match('/^0(70|80|81|90|91|701|702|703|704|705|706|707|708|709|802|803|804|805|806|807|808|809|810|811|812|813|814|815|816|817|818|819|901|902|903|904|905|906|907|908|909|910|911|912|913|914|915|916|917|918|919)\d{6}$/', $number)) {
-            return true; // Valid Nigerian number
-        }
+        return false;
     
-        return false; // Invalid number
     }
-    
     
 }
