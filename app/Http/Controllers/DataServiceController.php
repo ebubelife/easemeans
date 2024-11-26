@@ -152,7 +152,7 @@ class DataServiceController extends Controller
                'success' =>false,
                'status' => 'DATA_PURCHASE_FAILED',
                'message' => $decodedBody["message"],
-              // 'bvn_data' =>  $decodedBody
+               'body' =>  $body
                
            ],401);
 
