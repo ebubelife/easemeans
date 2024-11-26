@@ -189,9 +189,11 @@ class AirtimeServiceController extends Controller
         $pattern = '/^234[0-9]{11}/';
         if(preg_match($pattern,$phone)){
             return true; 
+        }else{
+            return false;
         }
     
-        return false;
+        
     
     }
     
