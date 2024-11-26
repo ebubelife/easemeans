@@ -55,7 +55,7 @@ class DataServiceController extends Controller
 
          */
 
-         $isvalid_nigerian_phone = $this->validate_phone_number($validated["phone"]);
+       /*  $isvalid_nigerian_phone = $this->validate_phone_number($validated["phone"]);
 
          if($isvalid_nigerian_phone==false){
             return response()->json([
@@ -64,7 +64,7 @@ class DataServiceController extends Controller
                 'message' => "Please enter a valid Nigerian phone number",
 
             ],400);
-         }
+         }*/
 
          $user_safehaven_info = json_decode($member->safehaven_account_data);
          $user_account_number = $user_safehaven_info->accountNumber;
