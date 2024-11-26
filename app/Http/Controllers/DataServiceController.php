@@ -10,18 +10,24 @@ use GuzzleHttp\Client;
 use App\Models\Members;
 use App\Models\Transactions;
 use App\Http\Controllers\VirtualAccountsController;
+use Illuminate\Support\Facades\Validator;
+
 
 
 class DataServiceController extends Controller
 {
    
     public function purchase(Request $request){
+        Validator::extend('preserve_spaces', function ($attribute, $value, $parameters, $validator) {
+            return is_string($value) && mb_strlen($value) === mb_strlen(trim($value, "\x00..\x1F"));
+        });
+        
 
         $validated = $request->validate([
                
                 
             'user_id' => 'required|string',
-            'bundle_code' => 'required|string',
+            'bundle_code' => 'required|string|preserve_spaces', //preserve spaces and override laravel default validator that removes spaces because some data plans in airtel category have spaces before
             'network'  => 'required|string',
             'amount'  => 'required|string',
             'phone'  => 'required|string',
