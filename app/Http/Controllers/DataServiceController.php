@@ -91,13 +91,13 @@ class DataServiceController extends Controller
 
             $service_category_id = "61efad06da92348f9dde5fa1";
         }
-        if($validated["network"] == "AIRTEL"){
+        if($validated["network"] == "Airtel"){
             $service_category_id = "61efad12da92348f9dde5fa4";
         }
         if($validated["network"] == "9Mobile"){
             $service_category_id = "61efad1dda92348f9dde5fa7";
         }
-        if($validated["network"] == "MTN_DATA"){
+        if($validated["network"] == "MTN-DATA"){
             $service_category_id = "6502eb6e65463b201bf8065f";
         }
 
