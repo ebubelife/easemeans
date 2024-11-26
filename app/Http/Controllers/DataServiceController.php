@@ -127,11 +127,11 @@ class DataServiceController extends Controller
          $bundle_code = "";
 
          if( $service_category_id == "61efad12da92348f9dde5fa4" && $validated["bundle_code"]="40MB"){
-             $bundle_code = "".$validated["bundle_code"];
+             $bundle_code = " ".$validated["bundle_code"];
 
          }
          else if( $service_category_id == "61efad12da92348f9dde5fa4" && $validated["bundle_code"]="100MB"){
-            $bundle_code = "".$validated["bundle_code"];
+            $bundle_code = " ".$validated["bundle_code"];
 
         }else{
             $bundle_code = $validated["bundle_code"];
