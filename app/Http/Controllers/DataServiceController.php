@@ -125,7 +125,7 @@ class DataServiceController extends Controller
             'channel' => 'WEB',
             'debitAccountNumber' => $user_account_number, //deduct the amount from the user's account on safehaven
             'phoneNumber' => $validated["phone"],
-            'bundleCode' => $validated["bundle_code"],
+            'bundleCode' => " ".$validated["bundle_code"],
         ]);
  
         // POST request using the created object
