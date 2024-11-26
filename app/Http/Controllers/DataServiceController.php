@@ -42,6 +42,30 @@ class DataServiceController extends Controller
                 
             ],400);
          }
+
+          //check if phone number is valid , a valid Nigerian number
+
+         /*
+
+        Valid Nigerian Number Format
+
+       1. Must be 11 digits long.
+       2. Starts with 070, 080, 081, 090, or 091 (common mobile prefixes in Nigeria).
+       3. May include the country code +234 or 234 at the beginning.
+
+         */
+
+         $isvalid_nigerian_phone = $this->isValidNigerianNumber($validated["phone"]);
+
+         if(!$isvalid_nigerian_phone){
+            return response()->json([
+                'success' =>false,
+                'status' => 'INVALID_PHONE_NUMBER',
+                'message' => "Please enter a valid Nigerian phone number",
+
+            ],400);
+         }
+
          $user_safehaven_info = json_decode($member->safehaven_account_data);
          $user_account_number = $user_safehaven_info->accountNumber;
 
@@ -171,4 +195,22 @@ class DataServiceController extends Controller
  
 
     }
+
+    function isValidNigerianNumber($number) {
+        // Remove spaces, dashes, or parentheses
+        $number = preg_replace('/[\s\-\(\)]+/', '', $number);
+    
+        // Replace country code +234 or 234 with 0
+        if (preg_match('/^\+?234/', $number)) {
+            $number = preg_replace('/^\+?234/', '0', $number);
+        }
+    
+        // Check if the number matches the Nigerian number format
+        if (preg_match('/^0(70|80|81|90|91|701|702|703|704|705|706|707|708|709|802|803|804|805|806|807|808|809|810|811|812|813|814|815|816|817|818|819|901|902|903|904|905|906|907|908|909|910|911|912|913|914|915|916|917|918|919)\d{6}$/', $number)) {
+            return true; // Valid Nigerian number
+        }
+    
+        return false; // Invalid number
+    }
+    
 }
