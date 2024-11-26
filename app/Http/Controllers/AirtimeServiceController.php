@@ -58,7 +58,8 @@ class AirtimeServiceController extends Controller
                 'success' =>false,
                 'status' => 'INVALID_PHONE_NUMBER',
                 'message' => "Please enter a valid Nigerian phone number",
-
+                'ms' => $isvalid_nigerian_phone,
+ 
             ],400);
          }
 
