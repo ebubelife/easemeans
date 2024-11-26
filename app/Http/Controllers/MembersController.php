@@ -246,6 +246,8 @@ class MembersController extends Controller
                    $sub_account_controller = new VirtualAccountsController();
                    $safehaven_sub_account_info = $sub_account_controller->get_sub_account_single($member_safehaven_info->_id, $validated["user_id"]);
 
+                   
+
                    //refresh user data object from database
                    $member = Members::find($validated["user_id"]) ;
 
