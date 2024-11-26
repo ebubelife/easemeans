@@ -124,6 +124,19 @@ class DataServiceController extends Controller
  
          ];
 
+         $bundle_code = "";
+
+         if( $service_category_id == "61efad12da92348f9dde5fa4" && $validated["bundle_code"]="40MB"){
+             $bundle_code = "".$validated["bundle_code"];
+
+         }
+         else if( $service_category_id == "61efad12da92348f9dde5fa4" && $validated["bundle_code"]="100MB"){
+            $bundle_code = "".$validated["bundle_code"];
+
+        }else{
+            $bundle_code = $validated["bundle_code"];
+        }
+
          $body = json_encode([
            
             'serviceCategoryId' => $service_category_id,
@@ -131,7 +144,7 @@ class DataServiceController extends Controller
             'channel' => 'WEB',
             'debitAccountNumber' => $user_account_number, //deduct the amount from the user's account on safehaven
             'phoneNumber' => $validated["phone"],
-            'bundleCode' => $validated["bundle_code"],
+            'bundleCode' => $bundle_code,
         ]);
  
         // POST request using the created object
