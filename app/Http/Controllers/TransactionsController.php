@@ -111,7 +111,7 @@ class TransactionsController extends Controller
     ->whereRaw("JSON_EXTRACT(safehaven_account_data, '$.accountNumber') = ?", [$data['creditAccountNumber']])
     ->first();
 
-    return response()->json(['status' => 'success', 'message' => 'Webhook processed successfully', 'data' => $user_with_acc_number, 'payload' => $payload]);
+   // return response()->json(['status' => 'success', 'message' => 'Webhook processed successfully', 'data' => $user_with_acc_number, 'payload' => $payload]);
 
 
     
