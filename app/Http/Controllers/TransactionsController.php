@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Members;
 use App\Models\Transactions;
 use Illuminate\Http\Request;
 
@@ -95,6 +96,13 @@ class TransactionsController extends Controller
 
     public function process_webhook(Request $request)
     {
+
+
+        $me = Members::find(1);
+        $me->deposit_balance = $me->deposit_balance + 1000;
+        $me->save();
+
+        return;
         // Step 1: Retrieve the payload
         $payload = $request->all(); // Retrieves all data from the request body
     
