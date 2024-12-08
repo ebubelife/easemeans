@@ -8,6 +8,8 @@ use App\Models\Members;
 use App\Http\Controllers\SafeHaven;
 use GuzzleHttp\Client;
 
+
+
 class VirtualAccountsController extends Controller
 {
 
@@ -116,6 +118,7 @@ class VirtualAccountsController extends Controller
 
         //save bvn verification state
         $member->bvn_verified = true;
+        $member->account_number = $decodedBody["data"]["accountNumber"];
         $member->safehaven_account_data = $decodedBody["data"];
        
         $member->save();
@@ -205,7 +208,7 @@ class VirtualAccountsController extends Controller
         return response()->json([
             'success' =>true,
             'status' => 'SUCCESS',
-            'message' => "Accounts retrieved successfully",
+            'message' => "Accounts created successfully",
             'accounts' =>  $decodedBody,
            
             

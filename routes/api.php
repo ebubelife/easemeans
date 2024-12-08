@@ -149,6 +149,9 @@ Route::controller(TransactionsController::class)->group(function(){
     //get one transactions by user
     Route::get('/v1/transactions/user/single/{user_id}', 'get_user_single_tx');
 
+     //process transaction from webhook
+     Route::get('/v1/webhook', 'process_webhook');
+
   
 
 

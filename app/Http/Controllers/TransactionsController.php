@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Transactions;
 use Illuminate\Http\Request;
 
+use Illuminate\Support\Facades\DB;
+
 class TransactionsController extends Controller
 {
    
@@ -89,5 +91,45 @@ class TransactionsController extends Controller
 
     }
 
+
+
+    public function process_webhook(Request $request)
+    {
+        // Step 1: Retrieve the payload
+        $payload = $request->all(); // Retrieves all data from the request body
+    
+        // Step 2: Extract specific fields (optional)
+        $type = $payload['type'] ?? null;
+        $data = $payload['data'] ?? [];
+
+        /*get user by using the account number in payload to query the database
+
+    Query the column holding the safehaving data, extract the JSON and get the account number and compare it to the account number in the payload*/
+
+        $user_with_acc_number = DB::table('members')
+        ->whereRaw("JSON_EXTRACT(safehaven_account_data, '$.data.accountNumber') = ?", [$data['creditAccountNumber']])
+        ->get();
+        
+        // Step 3: Perform business logic
+        if ($type === 'transfer' && ($data['type'] ?? '') === 'Inwards') {
+            // Example: Save to the database
+            $transaction = new Transactions();
+            $transaction->user_id = $user_with_acc_number["user_id"];
+            $transaction->service = "TRANSFER";
+            $transaction->category = "DEPOSIT";
+            $transaction->amount = strval($data['amount']);
+            $transaction->tx_detail = json_encode($data);
+            $transaction->status = "SUCCESS";
+            $transaction->save();
+        }
+    
+        // Log the received payload for debugging
+
+        \Illuminate\Support\Facades\Log::info('Webhook received', $payload);
+    
+        // Step 4: Return a response
+        return response()->json(['status' => 'success', 'message' => 'Webhook processed successfully']);
+    }
+    
 
 }
