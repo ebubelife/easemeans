@@ -102,13 +102,19 @@ class TransactionsController extends Controller
         $type = $payload['type'] ?? null;
         $data = $payload['data'] ?? [];
 
+       
         /*get user by using the account number in payload to query the database
 
     Query the column holding the safehaving data, extract the JSON and get the account number and compare it to the account number in the payload*/
 
-    $user_with_acc_number = DB::table('members')
+    $user_with_acc_number = DB::table('easemeans_members')
     ->whereRaw("JSON_EXTRACT(safehaven_account_data, '$.accountNumber') = ?", [$data['creditAccountNumber']])
     ->first();
+
+    return response()->json(['status' => 'success', 'message' => 'Webhook processed successfully', 'data' => $user_with_acc_number]);
+
+
+    
         
         // Step 3: Perform business logic
         if ($type === 'transfer' && ($data['type'] ?? '') === 'Inwards') {
