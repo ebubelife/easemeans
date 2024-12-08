@@ -106,9 +106,9 @@ class TransactionsController extends Controller
 
     Query the column holding the safehaving data, extract the JSON and get the account number and compare it to the account number in the payload*/
 
-        $user_with_acc_number = DB::table('members')
-        ->whereRaw("JSON_EXTRACT(safehaven_account_data, '$.data.accountNumber') = ?", [$data['creditAccountNumber']])
-        ->get();
+    $user_with_acc_number = DB::table('members')
+    ->whereRaw("JSON_EXTRACT(safehaven_account_data, '$.accountNumber') = ?", [$data['creditAccountNumber']])
+    ->first();
         
         // Step 3: Perform business logic
         if ($type === 'transfer' && ($data['type'] ?? '') === 'Inwards') {
