@@ -117,17 +117,17 @@ class TransactionsController extends Controller
     
         
         // Step 3: Perform business logic
-        if ($type === 'transfer' && ($data['type'] ?? '') === 'Inwards') {
+      //  if ($type === 'transfer' && ($data['type'] ?? '') === 'Inwards') {
             // Example: Save to the database
             $transaction = new Transactions();
             $transaction->user_id = $user_with_acc_number->id;
-            $transaction->service = "TRANSFER";
+            $transaction->service = $type;
             $transaction->category = "DEPOSIT";
             $transaction->amount = strval($data['amount']);
             $transaction->tx_detail = json_encode($data);
             $transaction->status = "SUCCESS";
             $transaction->save();
-        }
+      //  }
     
         // Log the received payload for debugging
 
