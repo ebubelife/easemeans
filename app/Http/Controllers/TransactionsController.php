@@ -120,7 +120,7 @@ class TransactionsController extends Controller
         if ($type === 'transfer' && ($data['type'] ?? '') === 'Inwards') {
             // Example: Save to the database
             $transaction = new Transactions();
-            $transaction->user_id = $user_with_acc_number->user_id;
+            $transaction->user_id = $user_with_acc_number->id;
             $transaction->service = "TRANSFER";
             $transaction->category = "DEPOSIT";
             $transaction->amount = strval($data['amount']);
