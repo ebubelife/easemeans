@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Mail;
 use Exception;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Hash;
-
+use Illuminate\Support\Facades\Validator;
 class MembersController extends Controller
 {
     function new_account_email_password(Request $request){
@@ -270,7 +270,48 @@ class MembersController extends Controller
             }
 
         }
-    
+
+        public function login(Request $request)
+        {
+            // Validate the request
+            $validator = Validator::make($request->all(), [
+                'email' => 'required|email',
+                'password' => 'required',
+            ]);
+        
+            if ($validator->fails()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Validation errors',
+                    'errors' => $validator->errors()
+                ], 422);
+            }
+        
+            // Attempt to authenticate using the Members model
+            $member = Members::where('email', $request->email)->first();
+        
+            if (!$member || !password_verify($request->password, $member->password)) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Invalid credentials'
+                ], 401);
+            }
+        
+            // Generate an API token
+            $token = $member->createToken('API Token')->plainTextToken;
+        
+            // Return a successful response
+            return response()->json([
+                'success' => true,
+                'message' => 'Login successful',
+                'user_data' => $member,
+                'token' => $token,
+                'data' => [
+                    'member' => $member,
+                    'token' => $token
+                ]
+            ]);
+        }
 
         public function get_members(){
 
