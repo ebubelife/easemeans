@@ -56,7 +56,7 @@ Route::controller(MembersController::class)->group(function(){
     Route::get('/v1/users/all', 'get_members');
 
      //login
-     Route::get('/v1/users/login', 'login');
+     Route::post('/v1/users/login', 'login');
 
 
 
