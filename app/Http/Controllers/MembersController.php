@@ -299,17 +299,17 @@ class MembersController extends Controller
             }
         
             // Generate an API token
-            $token = $member->createToken('API Token')->plainTextToken;
+           // $token = $member->createToken('API Token')->plainTextToken;
         
             // Return a successful response
             return response()->json([
                 'success' => true,
                 'message' => 'Login successful',
                 'user_data' => $member,
-                'token' => $token,
+               // 'token' => $token,
                 'data' => [
                     'member' => $member,
-                    'token' => $token
+                   // 'token' => $token
                 ]
             ]);
         }
