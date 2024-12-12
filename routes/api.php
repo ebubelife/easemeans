@@ -46,6 +46,11 @@ Route::controller(MembersController::class)->group(function(){
      //verify email 
     Route::post('/v1/verify_email', 'verify_email');
 
+    //send email otp for forgot password
+    Route::post('/v1/user/recover/send_otp', 'send_verification_email');
+
+   
+
     //update transaction pin
     Route::post('/v1/update/transaction_pin', 'set_transaction_pin');
 

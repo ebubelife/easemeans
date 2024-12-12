@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\SafeHaven;
 use App\Http\Controllers\VirtualAccountsController;
 use App\Mail\NewUserEmailCode;
+use App\Mail\ForgotPasswordOtp;
 use App\Models\VirtualAccounts;
 use Illuminate\Support\Facades\Mail;
 use Exception;
@@ -319,6 +320,44 @@ class MembersController extends Controller
             return response()->json(['success' => true, 'status' => 'SUCCESS', 'user_data'=>$all], 200);
                
         }
+
+        public function send_verification_email(Request $request){
+
+            $validated = $request->validate([
+               
+                
+                'email' => 'required|string',
+               
+    
+            ]);
+
+             //check if email exists
+             $member = Members::where('email', $validated["email"])->first();
+
+             $name = $member->first_name;
+             $otp = random_int(100000, 999999); // Generate a random OTP
+             $verificationLink = "--"; // Create verification link
+
+             //re-save otp
+             $member->email_verification_code = $otp;
+             $member->save();
+     
+             try {
+             Mail::to($member->email)->send(new ForgotPasswordOtp($name, $otp, $verificationLink));
+             return response()->json(['success' => true, 'status' => 'SUCCESS', 'user_data'=>$member], 200);
+                
+            } catch (Exception $e) {
+                // Log the error message for debugging
+                Log::error('Error sending email: ' . $e->getMessage());
+                return response()->json(['success' => false, 'status' => 'EMAIL_NOT_SENT', 'message'=>$e->getMessage(),  'user_data'=>$member], 400);
+                
+
+            }
+
+
+
+        }
+
 
        
    

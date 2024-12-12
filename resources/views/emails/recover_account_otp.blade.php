@@ -73,7 +73,7 @@
         </div>
         <div class="email-body">
             <p>Hello {{ $name }},</p>
-            <p>Please use the following OTP to complete your verification:</p>
+            <p>Someone requested to change the password on your Easemeans account. If it was you, please use the OTP below:</p>
             
             <div class="otp-code">
                 {{ $otp }}
