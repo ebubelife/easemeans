@@ -36,7 +36,7 @@ class NewUserEmailCode extends Mailable
         return $this->view('emails/new_user_otp', ['message' => $message])
                     ->with(['otp'=> $this->otp, 'firstName'=>$this->name, 'verificationLink'=>$this->verificationLink])
                    
-                    ->from('Easmeans@easmeans.com')
+                    ->from('Easemeans@easmeans.com')
                     ->subject('One more step!');
     }
 

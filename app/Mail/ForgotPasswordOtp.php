@@ -36,7 +36,7 @@ class ForgotPasswordOtp extends Mailable
         return $this->view('emails/recover_account_otp', ['message' => $message])
                     ->with(['otp'=> $this->otp, 'firstName'=>$this->name, 'verificationLink'=>$this->verificationLink])
                    
-                    ->from('Easmeans@easmeans.com')
+                    ->from('Easemeans@easmeans.com')
                     ->subject('Password Recovery');
     }
 

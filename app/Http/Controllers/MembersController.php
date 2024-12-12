@@ -359,6 +359,43 @@ class MembersController extends Controller
         }
 
 
+        public function change_password(Request $request)
+{
+    $validated = $request->validate([
+        'user_id' => 'required|string',
+        'password' => [
+            'required',
+            'string',
+            'min:8', // Minimum 8 characters
+            'regex:/[a-z]/', // At least one lowercase letter
+            'regex:/[A-Z]/', // At least one uppercase letter
+            'regex:/[0-9]/', // At least one number
+            'regex:/[@$!%*?&]/', // At least one special character
+        ],
+    ]);
+
+    // Check if the member exists
+    $member = Members::find($validated['user_id']);
+
+    if ($member) {
+        // Update and save the new hashed password
+        $member->password = Hash::make($validated['password']);
+        $member->save();
+
+        return response()->json([
+            'success' => true,
+            'status' => 'SUCCESS',
+            'user_data' => $member,
+        ], 200);
+    } else {
+        return response()->json([
+            'success' => false,
+            'status' => 'USER_NOT_EXISTS',
+            'message' => "User with ID {$validated['user_id']} does not exist.",
+        ], 400);
+    }
+}
+
        
    
 }
