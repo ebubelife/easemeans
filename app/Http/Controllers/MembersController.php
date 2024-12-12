@@ -290,7 +290,7 @@ class MembersController extends Controller
             // Attempt to authenticate using the Members model
             $member = Members::where('email', $request->email)->first();
         
-            if (!$member || !password_verify($request->password, $member->password)) {
+            if (!$member || !Hash::check($request->password, $member->password)) {
                 return response()->json([
                     'success' => false,
                     'message' => 'Invalid credentials'
