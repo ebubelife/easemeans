@@ -69,7 +69,7 @@
 <body>
     <div class="email-container">
         <div class="email-header">
-            <h1>Email Verification</h1>
+            <h1>Recover Account</h1>
         </div>
         <div class="email-body">
             <p>Hello {{ $name }},</p>
@@ -81,7 +81,7 @@
             
             <p>If you did not request this code, please ignore this email.</p>
             
-            <a href="{{ $verificationLink }}" class="email-button">Verify Now</a>
+           <!-- <a href="{{ $verificationLink }}" class="email-button">Verify Now</a>--->
         </div>
 
         <div class="email-footer">

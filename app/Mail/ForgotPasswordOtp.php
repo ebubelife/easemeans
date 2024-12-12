@@ -37,7 +37,7 @@ class ForgotPasswordOtp extends Mailable
                     ->with(['otp'=> $this->otp, 'firstName'=>$this->name, 'verificationLink'=>$this->verificationLink])
                    
                     ->from('Easmeans@easmeans.com')
-                    ->subject('One more step!');
+                    ->subject('Password Recovery');
     }
 
 }

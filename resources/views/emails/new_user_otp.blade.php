@@ -81,7 +81,7 @@
             
             <p>If you did not request this code, please ignore this email.</p>
             
-            <a href="{{ $verificationLink }}" class="email-button">Verify Now</a>
+            <!-- <a href="{{ $verificationLink }}" class="email-button">Verify Now</a>--->
         </div>
 
         <div class="email-footer">
