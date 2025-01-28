@@ -9,6 +9,7 @@ use App\Http\Controllers\VirtualAccountsController;
 use App\Http\Controllers\AirtimeServiceController;
 use App\Http\Controllers\DataServiceController;
 use App\Http\Controllers\TransactionsController;
+use App\Http\Controllers\CardUsersController;
 use App\Models\AirtimeService;
 use App\Models\VirtualAccounts;
 
@@ -165,7 +166,14 @@ Route::controller(TransactionsController::class)->group(function(){
 
   
 
+});
+
+Route::controller(CardUsersController::class)->group(function(){
+    //create new card customer & card
+    Route::get('/v1/card/customer/new', 'createCustomer');
 
 
 });
+
+
 
