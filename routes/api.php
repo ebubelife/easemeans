@@ -170,7 +170,7 @@ Route::controller(TransactionsController::class)->group(function(){
 
 Route::controller(CardUsersController::class)->group(function(){
     //create new card customer & card
-    Route::get('/v1/card/customer/new', 'createCustomer');
+    Route::post('/v1/card/customer/new', 'createCustomer');
 
 
 });
