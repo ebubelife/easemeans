@@ -451,6 +451,7 @@ class MembersController extends Controller
                 'status' => 'success',
                 'message' => "Address has been updated",
                 'user_data' => $member,
+                'new_customer_data' =>$create_new_customer_usd_wallet
 
             ],200);
         }
