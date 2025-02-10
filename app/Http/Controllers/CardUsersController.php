@@ -42,7 +42,7 @@ class CardUsersController extends Controller
             "name" => $member->first_name . " " . $member->last_name,
             "status" => "active",
             "emailAddress" => $member->email,
-            "phoneNumber" => $member->phone,
+            "phoneNumber" => $member_address->phone,
             "individual" => [
                 "firstName" => $member->first_name,
                 "lastName" => $member->last_name,
