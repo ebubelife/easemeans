@@ -194,7 +194,7 @@ Route::controller(CardUsersController::class)->group(function(){
     Route::post('/v1/sudo/customers/cards', 'getCustomerCards');
 
     //get single customer account
-    Route::get('/v1/sudo/account/{accountId}', 'getSingleSudoAccount');
+    Route::get('/v1/sudo/account/{accountId}/{user_id}', 'getSingleSudoAccount');
 
 
     
