@@ -105,7 +105,7 @@ class CardUsersController extends Controller
 
             
             }else{
-                Log::error('Sudo card customer creation failed', ['user_id' => $member->id, 'message' => $responseBody["message"] ]);
+                Log::error('Sudo card customer creation failed', ['user_id' => $member->id, 'message' => $member->sudo_customer_id ]);
                 return false;
             }
            
