@@ -78,7 +78,12 @@ class CardUsersController extends Controller
                     $member->sudo_account_data = json_encode($create_USD_wallet["data"]);
                     $member->save();
 
+                    //return true
+                    return true;
+
                     
+            }else{
+                return false;
             }
 
 
@@ -86,7 +91,8 @@ class CardUsersController extends Controller
 
             
             }
-            return response()->json(["customer_creation_feedback"=>$responseBody,"sudo_account_creation_feedback"=>$create_USD_wallet]);
+            return false;
+          //  return response()->json(["customer_creation_feedback"=>$responseBody,"sudo_account_creation_feedback"=>$create_USD_wallet]);
     
        
     }
@@ -123,12 +129,15 @@ class CardUsersController extends Controller
         ]);
 
         $responseBody = json_decode($response->getBody(), true);
-        return response()->json($responseBody);
+       // return response()->json($responseBody);
+
+       return true;
 
     } catch (\Exception $e) {
-        return response()->json([
+        return false;
+       /* return response()->json([
             'error' => $e->getMessage(),
-        ], 500);
+        ], 500);*/
     }
 }
 

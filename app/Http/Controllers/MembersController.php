@@ -58,6 +58,7 @@ class MembersController extends Controller
        $member->last_name = $validated["last_name"];
        $member->email = $validated["email"];
        $member->password = Hash::make($validated["password"]);
+
        
 
        if($member->save()){
@@ -248,9 +249,7 @@ class MembersController extends Controller
                    $sub_account_controller = new VirtualAccountsController();
                    $safehaven_sub_account_info = $sub_account_controller->get_sub_account_single($member_safehaven_info->_id, $validated["user_id"]);
 
-                   //create new customer and USD wallet for user
-                   $customer_controller = new CardUsersController();
-                  // $customer_controller->createCustomer($validated["user_id"]);
+                   
 
                    
 
@@ -434,6 +433,15 @@ class MembersController extends Controller
 
             // Save the JSON string to the member's address property
             $member->address = $addressJson;
+
+            //create new customer and USD wallet for user after address has been saved
+            $customer_controller = new CardUsersController();
+            $create_new_customer_usd_wallet = $customer_controller->createCustomer($validated["user_id"]);
+            
+            if( !$create_new_customer_usd_wallet){
+                return response()->json(['success' => false, 'status' => "COULD_NOT_CREATE_SUDO_DATA"],400);
+
+            }
 
             // Save the member model to the database
             $member->save();
