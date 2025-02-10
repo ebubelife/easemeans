@@ -439,7 +439,7 @@ class MembersController extends Controller
                 'message' => "Address has been updated",
                 'user_data' => $member,
 
-            ],400);
+            ],200);
         }
         }
 
