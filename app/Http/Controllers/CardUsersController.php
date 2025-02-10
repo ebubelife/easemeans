@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use GuzzleHttp\Client;
 use App\Models\Members;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 
 class CardUsersController extends Controller
 {
@@ -95,6 +96,7 @@ class CardUsersController extends Controller
 
                     
             }else{
+                Log::error('USD wallet creation failed', ['user_id' => $member->id, 'message' => $responseBody["message"] ]);
                 return false;
             }
 
@@ -103,6 +105,7 @@ class CardUsersController extends Controller
 
             
             }else{
+                Log::error('Sudo card customer creation failed', ['user_id' => $member->id, 'message' => $responseBody["message"] ]);
                 return false;
             }
            
@@ -160,6 +163,9 @@ class CardUsersController extends Controller
         }
         else{
             return response()->json(["success"=>false, "user_data"=>$member, "message"=>"Card creation failed. Contact admin", "status"=>"error"], 400);
+            Log::error('Card creation failed', ['user_id' => $member->id, 'message' => $responseBody["message"] ]);
+
+
         }
        
 
