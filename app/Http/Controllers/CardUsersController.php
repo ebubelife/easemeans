@@ -101,7 +101,7 @@ class CardUsersController extends Controller
 {
 
 
-    
+    //https://docs.sudo.africa/reference/create-card
     $client = new Client();
 
     $url = 'https://api.sandbox.sudo.cards/cards';
@@ -133,7 +133,7 @@ class CardUsersController extends Controller
         $responseBody = json_decode($response->getBody(), true);
         return response()->json($responseBody);
 
-       return true;
+       //return true;
 
     } catch (\Exception $e) {
         return false;
@@ -146,6 +146,8 @@ class CardUsersController extends Controller
 
 public function createUSDWallet($customerId)
 {
+
+    //https://docs.sudo.africa/reference/create-account
     
     $client = new Client();
 
@@ -185,6 +187,7 @@ public function createUSDWallet($customerId)
 
 public function getFundingSources()
 {
+    //this function isn't really relevant
     $response = Http::withHeaders([
         'Authorization' => env('SUDO_SANDBOX_API_KEY'),
     ])->get('https://api.sandbox.sudo.cards/fundingsources');
