@@ -162,7 +162,7 @@ class CardUsersController extends Controller
 
         }
         else{
-            return response()->json(["success"=>false, "user_data"=>$member, "message"=>$member->sudo_customer_id, "status"=>"error"], 400);
+            return response()->json(["success"=>false, "user_data"=>$member, "message"=>$responseBody["message"], "status"=>"error"], 400);
             Log::error('Card creation failed', ['user_id' => $member->id, 'message' => $responseBody["message"] ]);
 
 
