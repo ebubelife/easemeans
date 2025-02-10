@@ -316,7 +316,7 @@ class MembersController extends Controller
 
            //update subaccount information from safehaven endpoint
            $sub_account_controller = new VirtualAccountsController();
-           $safehaven_sub_account_info = $sub_account_controller->get_sub_account_single($member_safehaven_info->_id, $validated["user_id"]);
+           $safehaven_sub_account_info = $sub_account_controller->get_sub_account_single($member_safehaven_info->_id,$member->id);
 
 
            //get USD wallet data from sudo
