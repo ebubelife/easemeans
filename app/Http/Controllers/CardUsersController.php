@@ -293,8 +293,8 @@ public function getSingleSudoAccount($accountId, $user_id){
 
         $member = Members::find($user_id);
         $responseBody = json_decode($response->getBody(), true);
-        $member->sudo_account_data = $responseBody["data"];
-        return response()->json(["success"=>false, "user_data"=>$member, "message"=>$response["message"], "status"=>"success"], 200);
+       // $member->sudo_account_data = $responseBody["data"];
+        return response()->json(["success"=>false, "user_data"=>$member, "message"=>$responseBody, "status"=>"success"], 200);
     }
 
     return response()->json([
