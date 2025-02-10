@@ -153,7 +153,15 @@ class CardUsersController extends Controller
         ]);
 
         $responseBody = json_decode($response->getBody(), true);
-        return response()->json(["success"=>true,"new_card_data"=>$responseBody, "user_data"=>$member, "message"=>"Card created successfully", "status"=>"success"], 200);
+
+        if($responseBody["statusCode"]==200){
+            return response()->json(["success"=>true,"new_card_data"=>$responseBody, "user_data"=>$member, "message"=>"Card created successfully", "status"=>"success"], 200);
+
+        }
+        else{
+            return response()->json(["success"=>false, "user_data"=>$member, "message"=>"Card creation failed. Contact admin", "status"=>"error"], 400);
+        }
+       
 
        //return true;
 
