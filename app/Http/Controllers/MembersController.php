@@ -457,5 +457,47 @@ class MembersController extends Controller
         }
 
        
+
+
+        public function update_user_dob(Request $request){
+
+            $validated = $request->validate([
+    
+    
+                'user_id' => 'required|string',
+                'dob' => 'required|string',
+               
+    
+            ]);
+    
+            //check if user exists
+            $member = Members::find($validated["user_id"]);
+            if(!$member){
+                return response()->json([
+                    'success' =>false,
+                    'status' => 'USER_NOT_EXISTS',
+                    'message' => "User with that ID does not exist",
+    
+                ],400);
+            }
+    
+            else{
+    
+                 $member->dob = $validated["dob"];
+    
+                // Save the member model to the database
+                $member->save();
+    
+                return response()->json([
+                    'success' =>true,
+                    'status' => 'success',
+                    'message' => "Dob has been updated",
+                    'user_data' => $member,
+    
+                ],200);
+            }
+            }
+    
+           
    
 }

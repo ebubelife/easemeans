@@ -70,6 +70,10 @@ Route::controller(MembersController::class)->group(function(){
      //update address
      Route::post('/v1/users/update/address', 'update_user_address');
 
+     //update date of birth
+     Route::post('/v1/users/update/dob', 'update_user_dob');
+     
+
 
 
 });
