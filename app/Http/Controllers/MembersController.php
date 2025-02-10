@@ -252,7 +252,7 @@ class MembersController extends Controller
 
                    //get USD wallet data from sudo
                    $card_user_controller = new CardUsersController();
-                   $wallet_data = $card_user_controller->getSingleSudoAccount($member->sudo_customer_id, $member->id);
+                   $wallet_data = $card_user_controller->getSingleSudoAccount($member->sudo_account_id, $member->id);
 
 
                    
