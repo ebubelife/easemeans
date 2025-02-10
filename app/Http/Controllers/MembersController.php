@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Members;
 use Illuminate\Http\Request;
 use App\Http\Controllers\SafeHaven;
+use App\Http\Controllers\CardUsersController;
 use App\Http\Controllers\VirtualAccountsController;
 use App\Mail\NewUserEmailCode;
 use App\Mail\ForgotPasswordOtp;
@@ -246,6 +247,10 @@ class MembersController extends Controller
                    //update subaccount information from endpoint
                    $sub_account_controller = new VirtualAccountsController();
                    $safehaven_sub_account_info = $sub_account_controller->get_sub_account_single($member_safehaven_info->_id, $validated["user_id"]);
+
+                   //create new customer and USD wallet for user
+                   $customer_controller = new CardUsersController();
+                  // $customer_controller->createCustomer($validated["user_id"]);
 
                    
 

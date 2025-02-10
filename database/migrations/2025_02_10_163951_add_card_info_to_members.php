@@ -11,14 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('card_users', function (Blueprint $table) {
-            $table->id();
+        Schema::table('easemeans_members', function (Blueprint $table) {
+            //
+           
             $table->string("user_id")->nullable();
             $table->string("card_customer_id")->nullable();
             $table->text("card_customer_data")->nullable();
             $table->string("sudo_account_id")->nullable();
             $table->text("sudo_account_data")->nullable();
-            $table->timestamps();
+          
         });
     }
 
@@ -27,6 +28,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('card_users');
+        Schema::table('members', function (Blueprint $table) {
+            //
+        });
     }
 };

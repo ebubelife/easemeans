@@ -6,6 +6,7 @@ use App\Models\CardUsers;
 use Illuminate\Http\Request;
 use GuzzleHttp\Client;
 use App\Models\Members;
+use Illuminate\Support\Facades\Http;
 
 class CardUsersController extends Controller
 {
@@ -22,7 +23,7 @@ class CardUsersController extends Controller
         $member =  Members::where("id", $request->id)->first();
         $member_address = json_decode($member->address);
 
-        return $member_address->address_line1;
+       // return $member_address->address_line1;
 
 
         $client = new Client();
@@ -44,12 +45,12 @@ class CardUsersController extends Controller
                 "lastName" => $member->last_name,
             ],
             "billingAddress" => [
-                "line1" => $member_address["address_line1"],
-                "line2" => $member_address["address_line2"],
-                "city" => $member_address["city"],
-                "state" => $member_address["state"],
+                "line1" => $member_address->address_line1,
+                "line2" => $member_address->address_line2,
+                "city" => $member_address->city,
+                "state" => $member_address->state,
                 "country" => "NG",
-                "postalCode" => "800001",
+                "postalCode" => "900001",
             ],
         ];
     
@@ -64,19 +65,38 @@ class CardUsersController extends Controller
             //create card for new card holder
             if($responseBody["statusCode"] == 200){
 
-               $create_card = $this->createCard($responseBody["data"]["_id"]);
-                return $create_card;
+              //create wallet for the new customer
+            //https://docs.sudo.africa/reference/create-account
+
+            $create_USD_wallet = $this->createUSDWallet($responseBody["data"]["_id"]);
+            if($create_USD_wallet){
+
+                    $member->card_customer_id = $responseBody["data"]["_id"];
+                    $member->card_customer_data = json_encode($responseBody["data"]);
+
+                    $member->sudo_account_id = $create_USD_wallet["data"]["_id"];
+                    $member->sudo_account_data = json_encode($create_USD_wallet["data"]);
+                    $member->save();
+
+                    
             }
-            return response()->json($responseBody);
+
+
+
+
+            
+            }
+            return response()->json(["customer_creation_feedback"=>$responseBody,"sudo_account_creation_feedback"=>$create_USD_wallet]);
     
        
     }
 
-    public function createCard($customerId)
+    public function createCard($customerId, $user_account_number)
 {
+    
     $client = new Client();
 
-    $url = 'https://vault.sandbox.sudo.cards/cards';
+    $url = 'https://api.sandbox.sudo.cards/cards';
     $apiKey = env('SUDO_SANDBOX_API_KEY');
 
     $headers = [
@@ -87,8 +107,12 @@ class CardUsersController extends Controller
     $body = [
         "customerId" => $customerId,
         "type" => "virtual",
-       // "number" => "5061000001743021565",
+        
+       "fundingSourceId" => "671a36aeeb809f713d3b4104",
+        "brand" => "visa",
+        "debitAccountId" => $user_account_number,
         "currency" => "USD",
+        "issuerCountry" => "USA",
         "status" => "active",
     ];
 
@@ -106,6 +130,79 @@ class CardUsersController extends Controller
             'error' => $e->getMessage(),
         ], 500);
     }
+}
+
+
+public function createUSDWallet($customerId)
+{
+    
+    $client = new Client();
+
+    $url = 'https://api.sandbox.sudo.cards/accounts';
+    $apiKey = env('SUDO_SANDBOX_API_KEY');
+
+    $headers = [
+        'Content-Type' => 'application/json',
+        'Authorization' => 'Bearer '.$apiKey,
+    ];
+
+    $body = [
+        "customerId" => $customerId,
+        "accountType"=> "Savings",
+        "currency"=>"USD",
+        "type"=>"wallet",
+        
+      
+    ];
+
+    try {
+        $response = $client->post($url, [
+            'headers' => $headers,
+            'json' => $body,
+        ]);
+
+        $responseBody = json_decode($response->getBody(), true);
+        return $responseBody ;
+
+    } catch (\Exception $e) {
+        return false;
+       
+    }
+}
+
+public function getFundingSources()
+{
+    $response = Http::withHeaders([
+        'Authorization' => env('SUDO_SANDBOX_API_KEY'),
+    ])->get('https://api.sandbox.sudo.cards/fundingsources');
+
+    if ($response->successful()) {
+        return $response->json(); // Returns an associative array
+    }
+
+    return response()->json([
+        'error' => 'Failed to fetch funding sources',
+        'status' => $response->status(),
+        'message' => $response->body()
+    ], $response->status());
+}
+
+public function getSudoAccounts(){
+    //get sudo debit accounts NOT to be confused with safehaven sub accounts
+    $response = Http::withHeaders([
+        'Authorization' => env('SUDO_SANDBOX_API_KEY'),
+    ])->get('https://api.sandbox.sudo.cards/accounts');
+
+    if ($response->successful()) {
+        return $response->json(); // Returns an associative array
+    }
+
+    return response()->json([
+        'error' => 'Failed to fetch funding sources',
+        'status' => $response->status(),
+        'message' => $response->body()
+    ], $response->status());
+
 }
    
 }
