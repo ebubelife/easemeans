@@ -311,6 +311,22 @@ class MembersController extends Controller
             // Generate an API token
            // $token = $member->createToken('API Token')->plainTextToken;
         
+           $member_safehaven_info = json_decode($member->safehaven_account_data);
+
+
+           //update subaccount information from safehaven endpoint
+           $sub_account_controller = new VirtualAccountsController();
+           $safehaven_sub_account_info = $sub_account_controller->get_sub_account_single($member_safehaven_info->_id, $validated["user_id"]);
+
+
+           //get USD wallet data from sudo
+           $card_user_controller = new CardUsersController();
+           $wallet_data = $card_user_controller->getSingleSudoAccount($member->sudo_account_id, $member->id);
+
+
+           //retrieve member object again
+           $member = Members::where('email', $request->email)->first();
+           
             // Return a successful response
             return response()->json([
                 'success' => true,
