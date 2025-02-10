@@ -324,7 +324,7 @@ public function getCustomerCards($user_id){
     ])->get('https://api.sandbox.sudo.cards/cards/customer/'.$sudo_customer_id);
 
     if ($response->successful()) {
-        return $response->json()["data"]; // Returns an associative array
+        return $response->json(); // Returns an associative array
     }
 
     return response()->json([
