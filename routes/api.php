@@ -180,6 +180,10 @@ Route::controller(CardUsersController::class)->group(function(){
     //get sudo accounts NOT to be confused with safe haven sub accounts
     Route::get('/v1/sudo/accounts', 'getSudoAccounts');
 
+    //create new card
+    Route::get('/v1/cards/new', 'createCard');
+    
+
 
 });
 
