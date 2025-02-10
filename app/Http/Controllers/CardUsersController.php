@@ -12,15 +12,15 @@ class CardUsersController extends Controller
 {
 
     
-    public function createCustomer(Request $request)
+    public function createCustomer($user_id)
     {
 
-        $request->validate([
+      /*  $request->validate([
             'id' => 'required|string', // Can be email or username
            
-        ]);
+        ]);*/
 
-        $member =  Members::where("id", $request->id)->first();
+        $member =  Members::where("id", $user_id)->first();
         $member_address = json_decode($member->address);
 
        // return $member_address->address_line1;
