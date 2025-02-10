@@ -10,6 +10,7 @@ use App\Models\Members;
 class CardUsersController extends Controller
 {
 
+    
     public function createCustomer(Request $request)
     {
 
@@ -19,6 +20,9 @@ class CardUsersController extends Controller
         ]);
 
         $member =  Members::where("id", $request->id)->first();
+        $member_address = json_decode($member->address);
+
+        return $member_address["address_line1"];
 
 
         $client = new Client();
@@ -28,7 +32,7 @@ class CardUsersController extends Controller
     
         $headers = [
             'Content-Type' => 'application/json',
-            'Authorization' => 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzFhMzZhZGViODA5ZjcxM2QzYjQwZmYiLCJlbWFpbEFkZHJlc3MiOiJlYXNlbWVhbnNAZ21haWwuY29tIiwianRpIjoiNjc5OWY1ZTA2MGZiOTBmZTdiOGMwYmUyIiwibWVtYmVyc2hpcCI6eyJfaWQiOiI2NzFhMzZhZGViODA5ZjcxM2QzYjQxMDIiLCJidXNpbmVzcyI6eyJfaWQiOiI2NzFhMzZhZGViODA5ZjcxM2QzYjQwZmQiLCJuYW1lIjoiRUFTRU1FQU5TIExURCIsImlzQXBwcm92ZWQiOnRydWV9LCJ1c2VyIjoiNjcxYTM2YWRlYjgwOWY3MTNkM2I0MGZmIiwicm9sZSI6IkFQSUtleSJ9LCJpYXQiOjE3MzgxNDMyMDAsImV4cCI6MTc2OTcwMDgwMH0.lhuz6eV-qPb6Xv8LvRrlt7Tr36Cl6sj87fUuq5aDuhA',
+            'Authorization' => 'Bearer ' . $apiKey,
         ];
     
         $body = [
@@ -40,36 +44,39 @@ class CardUsersController extends Controller
                 "lastName" => $member->last_name,
             ],
             "billingAddress" => [
-                "line1" => "4 Barnawa Close",
-                "line2" => "Off Challawa Crescent",
-                "city" => "Barnawa",
-                "state" => "Kaduna",
+                "line1" => $member_address["address_line1"],
+                "line2" => $member_address["address_line2"],
+                "city" => $member_address["city"],
+                "state" => $member_address["state"],
                 "country" => "NG",
                 "postalCode" => "800001",
             ],
         ];
     
-        try {
+      
             $response = $client->post($url, [
                 'headers' => $headers,
                 'json' => $body,
             ]);
     
             $responseBody = json_decode($response->getBody(), true);
+
+            //create card for new card holder
+            if($responseBody["statusCode"] == 200){
+
+               $create_card = $this->createCard($responseBody["data"]["_id"]);
+                return $create_card;
+            }
             return response()->json($responseBody);
     
-        } catch (\Exception $e) {
-            return response()->json([
-                'error' => $e->getMessage(),
-            ], 500);
-        }
+       
     }
 
-    public function createCard()
+    public function createCard($customerId)
 {
     $client = new Client();
 
-    $url = 'https://vsult.sandbox.sudo.cards/cards';
+    $url = 'https://vault.sandbox.sudo.cards/cards';
     $apiKey = env('SUDO_SANDBOX_API_KEY');
 
     $headers = [
@@ -78,10 +85,10 @@ class CardUsersController extends Controller
     ];
 
     $body = [
-        "customerId" => "5f8b75ef12a06df84bd7aa3a",
-        "type" => "physical",
-        "number" => "5061000001743021565",
-        "currency" => "NGN",
+        "customerId" => $customerId,
+        "type" => "virtual",
+       // "number" => "5061000001743021565",
+        "currency" => "USD",
         "status" => "active",
     ];
 
