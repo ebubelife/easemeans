@@ -71,8 +71,8 @@ class CardUsersController extends Controller
             $create_USD_wallet = $this->createUSDWallet($responseBody["data"]["_id"]);
             if($create_USD_wallet){
 
-                    $member->card_customer_id = $responseBody["data"]["_id"];
-                    $member->card_customer_data = json_encode($responseBody["data"]);
+                    $member->sudo_customer_id = $responseBody["data"]["_id"];
+                    $member->sudo_customer_data = json_encode($responseBody["data"]);
 
                     $member->sudo_account_id = $create_USD_wallet["data"]["_id"];
                     $member->sudo_account_data = json_encode($create_USD_wallet["data"]);

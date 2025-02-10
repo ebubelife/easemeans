@@ -13,13 +13,11 @@ return new class extends Migration
     {
         Schema::table('easemeans_members', function (Blueprint $table) {
             //
-           
-            $table->string("user_id")->nullable();
-            $table->string("card_customer_id")->nullable();
-            $table->text("card_customer_data")->nullable();
+          
+            $table->string("sudo_customer_id")->nullable();
+            $table->text("sudo_customer_data")->nullable();
             $table->string("sudo_account_id")->nullable();
             $table->text("sudo_account_data")->nullable();
-          
         });
     }
 
