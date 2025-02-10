@@ -281,5 +281,29 @@ public function getSudoAccounts(){
     ], $response->status());
 
 }
+
+public function getCustomerCards(Request $request){
+
+    $member = Members::find($request->user_id);
+    $sudo_account_id = $member->sudo_account_id;
+
+    $sudo_customer_id = $member->sudo_customer_id;
+     //get virtual cards belonging to customer
+     $response = Http::withHeaders([
+        'Authorization' => env('SUDO_SANDBOX_API_KEY'),
+    ])->get('https://api.sandbox.sudo.cards/cards/customer/'.$sudo_customer_id);
+
+    if ($response->successful()) {
+        return $response->json(); // Returns an associative array
+    }
+
+    return response()->json([
+        'success' => false,
+        'error' => 'Failed to fetch funding sources',
+        'status' => $response->status(),
+        'message' => $response->body()
+    ], $response->status());
+
+}
    
 }
