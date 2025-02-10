@@ -281,11 +281,11 @@ public function getSudoAccounts(){
     ], $response->status());
 
 }
-public function getSingleSudoAccount($customerId, $user_id){
+public function getSingleSudoAccount($accountId, $user_id){
     //get sudo debit accounts NOT to be confused with safehaven sub accounts
     $response = Http::withHeaders([
         'Authorization' => env('SUDO_SANDBOX_API_KEY'),
-    ])->get('https://api.sandbox.sudo.cards/accounts/'.$customerId);
+    ])->get('https://api.sandbox.sudo.cards/accounts/'.$accountId);
 
   
 
