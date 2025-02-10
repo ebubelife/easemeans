@@ -179,7 +179,10 @@ Route::controller(CardUsersController::class)->group(function(){
     //create new card customer & card
     Route::post('/v1/card/customer/new', 'createCustomer');
     //get card funding sources
-    Route::get('/v1/card/funding/source', 'getFundingSources');
+    Route::get('/v1/sudo/card/funding/source', 'getFundingSources');
+
+    //get customers
+    Route::get('/v1/sudo/customers', 'getCustomers');
 
     //get sudo accounts NOT to be confused with safe haven sub accounts
     Route::get('/v1/sudo/accounts', 'getSudoAccounts');

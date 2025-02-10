@@ -244,6 +244,25 @@ public function getFundingSources()
     ], $response->status());
 }
 
+public function getCustomers()
+{
+    //this function isn't really relevant
+    $response = Http::withHeaders([
+        'Authorization' => env('SUDO_SANDBOX_API_KEY'),
+    ])->get('https://api.sandbox.sudo.cards/customers');
+
+    if ($response->successful()) {
+        return $response->json(); // Returns an associative array
+    }
+
+    return response()->json([
+        'success' => false,
+        'error' => 'Failed to fetch customers',
+        'status' => $response->status(),
+        'message' => $response->body()
+    ], $response->status());
+}
+
 public function getSudoAccounts(){
     //get sudo debit accounts NOT to be confused with safehaven sub accounts
     $response = Http::withHeaders([
