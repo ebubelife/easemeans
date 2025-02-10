@@ -99,8 +99,13 @@ class CardUsersController extends Controller
        
     }
 
-    public function createCard($customerId, $user_account_number)
+    public function createCard(Request $request)
 {
+
+    $member = Members::find($request->user_id);
+    $sudo_account_id = $member->sudo_account_id;
+
+    $sudo_customer_id = $member->sudo_customer_id;
 
 
     //https://docs.sudo.africa/reference/create-card
@@ -115,12 +120,12 @@ class CardUsersController extends Controller
     ];
 
     $body = [
-        "customerId" => $customerId,
+        "customerId" => $sudo_customer_id,
         "type" => "virtual",
         
        "fundingSourceId" => "671a36aeeb809f713d3b4104",
         "brand" => "visa",
-        "debitAccountId" => $user_account_number,
+        "debitAccountId" => $sudo_account_id,
         "currency" => "USD",
         "issuerCountry" => "USA",
         "status" => "active",
@@ -133,7 +138,7 @@ class CardUsersController extends Controller
         ]);
 
         $responseBody = json_decode($response->getBody(), true);
-        return response()->json($responseBody);
+        return response()->json(["success"=>true,"data"=>$responseBody, "message"=>"Card created successfully", "status"=>"success"]);
 
        //return true;
 
