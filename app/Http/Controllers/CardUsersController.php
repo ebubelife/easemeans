@@ -38,22 +38,34 @@ class CardUsersController extends Controller
     
         $body = [
             "type" => "individual",
-            "name" => $member->first_name ." ".$member->last_name,
+            "name" => $member->first_name . " " . $member->last_name,
             "status" => "active",
+            "emailAddress" => $member->email,
+            "phoneNumber" => $member->phone,
             "individual" => [
                 "firstName" => $member->first_name,
                 "lastName" => $member->last_name,
+                "dob" => $member->dob, // Ensure the format is YYYY/MM/DD
+                "identity" => [
+                    "type" => "BVN",
+                    "number" => $member->bvn, // Ensure BVN is stored securely
+                ],
             ],
             "billingAddress" => [
                 "line1" => $member_address->address_line1,
-                "line2" => $member_address->address_line2,
+                "line2" => $member_address->address_line2 ?? "",
                 "city" => $member_address->city,
                 "state" => $member_address->state,
-                "country" => "NG",
-                "postalCode" => "900001",
+                "country" => "Nigeria",
+                "postalCode" =>  "300001",
+            ],
+            "company" => [
+                "officer" => [
+                    "firstName" => $member->first_name,
+                    "lastName" => $member->last_name,
+                ],
             ],
         ];
-    
       
             $response = $client->post($url, [
                 'headers' => $headers,
