@@ -291,7 +291,12 @@ public function getSingleSudoAccount($accountId, $user_id){
 
     if ($response->successful()) {
 
+       
+
         $member = Members::find($user_id);
+
+        return response()->json(["success"=>false, "user_data"=>$member]);
+        
         $responseBody = json_decode($response->getBody(), true);
         $member->sudo_account_data = json_encode($responseBody["data"]);
         $member->save();
@@ -300,7 +305,7 @@ public function getSingleSudoAccount($accountId, $user_id){
 
     return response()->json([
         'success' => false,
-        'error' => 'Failed to fetch funding sources',
+        'error' => 'Failed to fetch sudo account',
         'status' => $response->status(),
         'message' => $response->body()
     ], $response->status());
