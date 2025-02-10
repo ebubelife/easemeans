@@ -181,7 +181,7 @@ Route::controller(CardUsersController::class)->group(function(){
     Route::get('/v1/sudo/accounts', 'getSudoAccounts');
 
     //create new card
-    Route::get('/v1/cards/new', 'createCard');
+    Route::post('/v1/cards/new', 'createCard');
     
 
 
