@@ -396,6 +396,53 @@ class MembersController extends Controller
     }
 }
 
+       public function update_user_address(Request $request){
+
+        $validated = $request->validate([
+
+
+            'user_id' => 'required|string',
+            'address_line1' => 'required|string',
+            'address_line2' => 'required|string',
+            'city' => 'required|string',
+            'state' => 'required|string',
+           
+            'phone' => 'required|string',
+
+        ]);
+
+        //check if user exists
+        $member = Members::find($validated["user_id"]);
+        if(!$member){
+            return response()->json([
+                'success' =>false,
+                'status' => 'USER_NOT_EXISTS',
+                'message' => "User with that ID does not exist",
+
+            ],400);
+        }
+
+        else{
+
+           // Convert the validated data to a JSON string
+            $addressJson = json_encode($validated);
+
+            // Save the JSON string to the member's address property
+            $member->address = $addressJson;
+
+            // Save the member model to the database
+            $member->save();
+
+            return response()->json([
+                'success' =>true,
+                'status' => 'success',
+                'message' => "Address has been updated",
+                'user_data' => $member,
+
+            ],400);
+        }
+        }
+
        
    
 }

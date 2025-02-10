@@ -5,12 +5,22 @@ namespace App\Http\Controllers;
 use App\Models\CardUsers;
 use Illuminate\Http\Request;
 use GuzzleHttp\Client;
+use App\Models\Members;
 
 class CardUsersController extends Controller
 {
 
-    public function createCustomer()
+    public function createCustomer(Request $request)
     {
+
+        $request->validate([
+            'id' => 'required|string', // Can be email or username
+           
+        ]);
+
+        $member =  Members::where("id", $request->id)->first();
+
+
         $client = new Client();
     
         $url = 'https://api.sandbox.sudo.cards/customers';
@@ -18,16 +28,16 @@ class CardUsersController extends Controller
     
         $headers = [
             'Content-Type' => 'application/json',
-            'Authorization' => 'Basic '.$apiKey,
+            'Authorization' => 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzFhMzZhZGViODA5ZjcxM2QzYjQwZmYiLCJlbWFpbEFkZHJlc3MiOiJlYXNlbWVhbnNAZ21haWwuY29tIiwianRpIjoiNjc5OWY1ZTA2MGZiOTBmZTdiOGMwYmUyIiwibWVtYmVyc2hpcCI6eyJfaWQiOiI2NzFhMzZhZGViODA5ZjcxM2QzYjQxMDIiLCJidXNpbmVzcyI6eyJfaWQiOiI2NzFhMzZhZGViODA5ZjcxM2QzYjQwZmQiLCJuYW1lIjoiRUFTRU1FQU5TIExURCIsImlzQXBwcm92ZWQiOnRydWV9LCJ1c2VyIjoiNjcxYTM2YWRlYjgwOWY3MTNkM2I0MGZmIiwicm9sZSI6IkFQSUtleSJ9LCJpYXQiOjE3MzgxNDMyMDAsImV4cCI6MTc2OTcwMDgwMH0.lhuz6eV-qPb6Xv8LvRrlt7Tr36Cl6sj87fUuq5aDuhA',
         ];
     
         $body = [
             "type" => "individual",
-            "name" => "John Doe",
+            "name" => $member->first_name ." ".$member->last_name,
             "status" => "active",
             "individual" => [
-                "firstName" => "John",
-                "lastName" => "Doe",
+                "firstName" => $member->first_name,
+                "lastName" => $member->last_name,
             ],
             "billingAddress" => [
                 "line1" => "4 Barnawa Close",

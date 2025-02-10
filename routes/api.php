@@ -67,6 +67,9 @@ Route::controller(MembersController::class)->group(function(){
      //login
      Route::post('/v1/users/login', 'login');
 
+     //update address
+     Route::post('/v1/users/update/address', 'update_user_address');
+
 
 
 });
