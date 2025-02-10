@@ -205,6 +205,7 @@ public function getFundingSources()
     }
 
     return response()->json([
+        'success' => false,
         'error' => 'Failed to fetch funding sources',
         'status' => $response->status(),
         'message' => $response->body()
@@ -222,6 +223,7 @@ public function getSudoAccounts(){
     }
 
     return response()->json([
+        'success' => false,
         'error' => 'Failed to fetch funding sources',
         'status' => $response->status(),
         'message' => $response->body()
