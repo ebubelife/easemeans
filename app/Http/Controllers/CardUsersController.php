@@ -312,9 +312,9 @@ public function getSingleSudoAccount($accountId, $user_id){
 
 }
 
-public function getCustomerCards(Request $request){
+public function getCustomerCards($user_id){
 
-    $member = Members::find($request->user_id);
+    $member = Members::find($user_id);
     $sudo_account_id = $member->sudo_account_id;
 
     $sudo_customer_id = $member->sudo_customer_id;
@@ -324,7 +324,7 @@ public function getCustomerCards(Request $request){
     ])->get('https://api.sandbox.sudo.cards/cards/customer/'.$sudo_customer_id);
 
     if ($response->successful()) {
-        return $response->json(); // Returns an associative array
+        return $response->json()["data"]; // Returns an associative array
     }
 
     return response()->json([
