@@ -22,7 +22,7 @@ class CardUsersController extends Controller
         $member =  Members::where("id", $request->id)->first();
         $member_address = json_decode($member->address);
 
-        return $member_address["address_line1"];
+        return $member_address->address_line1;
 
 
         $client = new Client();
