@@ -124,11 +124,14 @@ class CardUsersController extends Controller
         "type" => "virtual",
         
        "fundingSourceId" => "671a36aeeb809f713d3b4104",
-        "brand" => "visa",
+        "brand" => "Visa",
         "debitAccountId" => $sudo_account_id,
         "currency" => "USD",
-        "issuerCountry" => "USA",
+        
         "status" => "active",
+        "amount" => 3,
+        "expirationDate"=> "",
+        "issuerCountry"=> "USA"
     ];
 
     try {
