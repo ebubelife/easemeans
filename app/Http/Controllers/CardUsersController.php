@@ -281,7 +281,7 @@ public function getSudoAccounts(){
     ], $response->status());
 
 }
-public function getSingleSudoAccounts($customerId, $user_id){
+public function getSingleSudoAccount($customerId, $user_id){
     //get sudo debit accounts NOT to be confused with safehaven sub accounts
     $response = Http::withHeaders([
         'Authorization' => env('SUDO_SANDBOX_API_KEY'),
@@ -292,8 +292,9 @@ public function getSingleSudoAccounts($customerId, $user_id){
     if ($response->successful()) {
 
         $member = Members::find($user_id);
-        $member->sudo_account_data = $response->json()["data"];
-        return $response->json(); // Returns an associative array
+        $responseBody = json_decode($response->getBody(), true);
+        $member->sudo_account_data = $responseBody["data"];
+        return response()->json(["success"=>false, "user_data"=>$member, "message"=>$response["message"], "status"=>"success"], 200);
     }
 
     return response()->json([

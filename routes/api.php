@@ -191,7 +191,7 @@ Route::controller(CardUsersController::class)->group(function(){
     Route::post('/v1/cards/new', 'createCard');
 
     //get customer's cards
-    Route::post('/v1/sudo/customers/cards', 'getCustomerCards');
+    Route::post('/v1/sudo/customers/cards/{customerId}/{user_id}', 'getCustomerCards');
 
     
     
