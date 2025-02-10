@@ -256,7 +256,7 @@ class MembersController extends Controller
 
 
                    //get all virtual cards
-                   $cards = $card_user_controller->getCustomerCards($member->id);
+                  // $cards = $card_user_controller->getCustomerCards($member->id);
 
 
                    
@@ -265,11 +265,11 @@ class MembersController extends Controller
                    $member = Members::find($validated["user_id"]) ;
 
                    if($member->transaction_pin != $validated["pin"] ){
-                    return response()->json(['success' => false, 'status' => 'SUCCESS', 'message'=>"Wrong pin",  'user_data'=>$member, "sudo_wallet_data"=> $wallet_data, "user_cards"=>$cards], 400);
+                    return response()->json(['success' => false, 'status' => 'SUCCESS', 'message'=>"Wrong pin",  'user_data'=>$member, "sudo_wallet_data"=> $wallet_data ], 400);
 
                    }
 
-                    return response()->json(['success' => true, 'status' => 'SUCCESS', 'message'=>"login successful",'user_data'=>$member, "sudo_wallet_data"=> $wallet_data, "user_cards"=>$cards], 200);
+                    return response()->json(['success' => true, 'status' => 'SUCCESS', 'message'=>"login successful",'user_data'=>$member, "sudo_wallet_data"=> $wallet_data], 200);
                 
             }else{
 
@@ -326,7 +326,7 @@ class MembersController extends Controller
            $wallet_data = $card_user_controller->getSingleSudoAccount($member->sudo_account_id, $member->id);
 
             //get all virtual cards
-            $cards = $card_user_controller->getCustomerCards($member->id);
+          //  $cards = $card_user_controller->getCustomerCards($member->id);
 
            //retrieve member object again
            $member = Members::where('email', $request->email)->first();
@@ -336,7 +336,7 @@ class MembersController extends Controller
                 'success' => true,
                 'message' => 'Login successful',
                 'user_data' => $member,
-                'user_cards' => $cards,
+               // 'user_cards' => $cards,
                // 'token' => $token,
                 'data' => [
                 'member' => $member,
