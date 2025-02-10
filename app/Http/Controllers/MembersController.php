@@ -245,9 +245,15 @@ class MembersController extends Controller
                    $member_safehaven_info = json_decode($member->safehaven_account_data);
 
 
-                   //update subaccount information from endpoint
+                   //update subaccount information from safehaven endpoint
                    $sub_account_controller = new VirtualAccountsController();
                    $safehaven_sub_account_info = $sub_account_controller->get_sub_account_single($member_safehaven_info->_id, $validated["user_id"]);
+
+
+                   //get USD wallet data from sudo
+                   $card_user_controller = new CardUsersController();
+                   $wallet_data = $card_user_controller->getSingleSudoAccounts($member->sudo_customer_id, $member->id);
+
 
                    
 
@@ -257,11 +263,11 @@ class MembersController extends Controller
                    $member = Members::find($validated["user_id"]) ;
 
                    if($member->transaction_pin != $validated["pin"] ){
-                    return response()->json(['success' => false, 'status' => 'SUCCESS', 'message'=>"Wrong pin",  'user_data'=>$member], 400);
+                    return response()->json(['success' => false, 'status' => 'SUCCESS', 'message'=>"Wrong pin",  'user_data'=>$member, "sudo_wallet_data"=> $wallet_data], 400);
 
                    }
 
-                    return response()->json(['success' => true, 'status' => 'SUCCESS', 'message'=>"login successful",'user_data'=>$member], 200);
+                    return response()->json(['success' => true, 'status' => 'SUCCESS', 'message'=>"login successful",'user_data'=>$member, "sudo_wallet_data"=> $wallet_data], 200);
                 
             }else{
 
@@ -312,7 +318,7 @@ class MembersController extends Controller
                 'user_data' => $member,
                // 'token' => $token,
                 'data' => [
-                    'member' => $member,
+                'member' => $member,
                    // 'token' => $token
                 ]
             ]);
