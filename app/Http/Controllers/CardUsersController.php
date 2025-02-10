@@ -138,7 +138,7 @@ class CardUsersController extends Controller
         ]);
 
         $responseBody = json_decode($response->getBody(), true);
-        return response()->json(["success"=>true,"new_card_data"=>$responseBody, "user_data"=>$member, "message"=>"Card created successfully", "status"=>"success"]);
+        return response()->json(["success"=>true,"new_card_data"=>$responseBody, "user_data"=>$member, "message"=>"Card created successfully", "status"=>"success"], 200);
 
        //return true;
 
@@ -146,6 +146,9 @@ class CardUsersController extends Controller
         return false;
         return response()->json([
             'error' => $e->getMessage(),
+            "user_data"=>$member,
+            "success"=> false,
+            "status"=>"error"
         ], 500);
     }
 }
