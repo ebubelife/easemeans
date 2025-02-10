@@ -300,7 +300,7 @@ public function getSingleSudoAccount($accountId, $user_id){
         $responseBody = json_decode($response->getBody(), true);
         $member->sudo_account_data = json_encode($responseBody["data"]);
         $member->save();
-        return response()->json(["success"=>false, "user_data"=>$member, "message"=>$responseBody, "status"=>"success"], 200);
+        return response()->json(["success"=>false, "user_data"=>$member, "message"=>$responseBody["data"], "status"=>"success"], 200);
     }
 
     return response()->json([
