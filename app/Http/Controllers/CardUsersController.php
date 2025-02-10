@@ -69,7 +69,7 @@ class CardUsersController extends Controller
             //https://docs.sudo.africa/reference/create-account
 
             $create_USD_wallet = $this->createUSDWallet($responseBody["data"]["_id"]);
-            if($create_USD_wallet){
+            if($create_USD_wallet["statusCode"] == 200){
 
                     $member->sudo_customer_id = $responseBody["data"]["_id"];
                     $member->sudo_customer_data = json_encode($responseBody["data"]);
@@ -90,8 +90,10 @@ class CardUsersController extends Controller
 
 
             
+            }else{
+                return false;
             }
-            return false;
+           
           //  return response()->json(["customer_creation_feedback"=>$responseBody,"sudo_account_creation_feedback"=>$create_USD_wallet]);
     
        
@@ -175,13 +177,14 @@ public function createUSDWallet($customerId)
         ]);
 
         $responseBody = json_decode($response->getBody(), true);
-       // return $responseBody ;
+        return $responseBody ;
 
-       return true;
+      
 
     } catch (\Exception $e) {
-        return false;
-       
+        return response()->json([
+            'error' => $e->getMessage(),
+        ], 500);
     }
 }
 
