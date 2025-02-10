@@ -99,6 +99,8 @@ class CardUsersController extends Controller
 
     public function createCard($customerId, $user_account_number)
 {
+
+
     
     $client = new Client();
 
@@ -129,15 +131,15 @@ class CardUsersController extends Controller
         ]);
 
         $responseBody = json_decode($response->getBody(), true);
-       // return response()->json($responseBody);
+        return response()->json($responseBody);
 
        return true;
 
     } catch (\Exception $e) {
         return false;
-       /* return response()->json([
+        return response()->json([
             'error' => $e->getMessage(),
-        ], 500);*/
+        ], 500);
     }
 }
 
@@ -171,7 +173,9 @@ public function createUSDWallet($customerId)
         ]);
 
         $responseBody = json_decode($response->getBody(), true);
-        return $responseBody ;
+       // return $responseBody ;
+
+       return true;
 
     } catch (\Exception $e) {
         return false;
